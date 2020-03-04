@@ -1,20 +1,18 @@
 import React from 'react';
-import {Navbar, Container, NavDropdown} from 'react-bootstrap';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import './NavBar.css';
+import Connection from '../Connection/Connection';
+
 
 const NavBar = () =>{
 
     return(
-        <nav className="App-navbar">
-                <Container fluid>
-                    <Navbar expand="lg" variant="dark" bg="dark">
-                    <Navbar.Brand href="#">Navbar</Navbar.Brand>
-                    <NavDropdown.Item href="#action/3.1">Norage Kart</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.1">Boss Rush</NavDropdown.Item>
-                    <DropdownMenu></DropdownMenu>
-                </Navbar>
-                </Container>
-        </nav>
+        <div className="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between shadow-lg">
+            <Connection></Connection>
+            <a className="btn btn-danger">Norage Kart</a>
+            <a className="btn btn-danger">Boss Ruch</a>
+            <DropdownMenu></DropdownMenu>
+        </div>
     )
 }
 

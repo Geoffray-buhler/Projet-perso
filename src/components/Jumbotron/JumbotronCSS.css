@@ -1,3 +1,20 @@
 .bg-transparent{
     background-color: #00000000 !important;
+    z-index: 1;
 }
+
+.vh-86{
+    height: 86vh;
+}
+
+video#bgvid{
+    position: absolute; 
+    right: 0;
+    bottom: 100px;
+    min-width: 100%; 
+    min-height: 100%;
+    width: auto; 
+    height: auto; 
+    z-index: 0;
+    background-size: cover;
+  }

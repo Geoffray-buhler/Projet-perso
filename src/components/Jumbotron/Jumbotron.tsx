@@ -5,8 +5,8 @@ import './JumbotronCSS.css';
 const Jumbotron = () =>{
     return(
     <header className="App-header rounded-lg">
-        <BootJumbo fluid className="bg-transparent">
-            <Container fluid className="text-light">
+        <BootJumbo fluid className="bg-transparent w-100 vh-86">
+            <Container fluid className="text-light mx-auto">
                 <h1>Griffont's Game</h1>
                 <p>
                 Port-folio de mes créations vidéo-ludique ainsi que Web / Web mobile.

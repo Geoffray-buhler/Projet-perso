@@ -1,0 +1,16 @@
+.container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .svg{
+    width: 10px;
+    height: 10px;
+  }
+
+  .svg:hover{
+    fill:#03f7ff;
+  }
