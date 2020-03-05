@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Jumbotron as BootJumbo, Container} from 'react-bootstrap';
 import './JumbotronCSS.css';
 
+declare global {
+    interface Window { VANTA: any; }
+}
+
 const Jumbotron = () =>{
+
+    /**
+     * CAUTION
+     * These scripts MUST be included for this component to work
+     * <script src="./JS/three.r95.min.js"></script>
+     * <script src="./JS/vanta.cells.min.js"></script>
+     */
+    useEffect(() => {
+        if(window.VANTA){
+            console.log("BIND VANTA")
+            window.VANTA.CELLS({
+                el: "#bgAnim",
+                mouseControls: true,
+                touchControls: true,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                color1: 0xffff,
+                color2: 0xc2ff,
+                speed: 3.30
+            }) 
+        }
+    }, [])
     return(
-    <header className="App-header rounded-lg">
-        <BootJumbo fluid className="bg-transparent w-100 vh-86">
-            <Container fluid className="text-light mx-auto">
-                <h1>Griffont's Game</h1>
+    <header id="bgAnim" className="App-header rounded-lg">
+        <BootJumbo fluid className="bg-transparent w-100">
+            <Container fluid className="text-light text-center mx-auto">
+                <p className="text-shadow h1">Griffont's Game</p>
                 <p>
                 Port-folio de mes créations vidéo-ludique ainsi que Web / Web mobile.
                 </p>

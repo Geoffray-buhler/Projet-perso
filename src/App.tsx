@@ -3,18 +3,22 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom-css-bootstrap-magic-2020-03-04.css';
-
-import Header from './components/Header/Header';
-import Body from './components/Body/Body';
-import Footer from './components/Footer/Footer';
+import { Switch,BrowserRouter as Router,Route } from 'react-router-dom';
+import Accueil from './components/Accueil';
+import NavBar from './components/NavBar/NavBar';
+import Jumbotron from './components/Jumbotron/Jumbotron';
 
 const App = () => {
   return (
-    <div className="App">
-      <Header></Header>
-      <Body></Body>
-      <Footer></Footer>
-    </div>
+    <Router>
+      <Jumbotron></Jumbotron>
+      <NavBar></NavBar>
+      <Switch>
+        <Route path="/">
+          <Accueil/>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

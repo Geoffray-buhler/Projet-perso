@@ -4,17 +4,25 @@
 }
 
 .vh-86{
-    height: 86vh;
+    height:calc(86vh - 2vw);
 }
 
-video#bgvid{
-    position: absolute; 
-    right: 0;
-    bottom: 100px;
-    min-width: 100%; 
-    min-height: 100%;
-    width: auto; 
-    height: auto; 
-    z-index: 0;
-    background-size: cover;
-  }
+.App-header{
+    background-color: #282c3400;
+    min-height: calc(100vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(32px + 2vmin);
+    color: #252525;
+}
+
+.h1{
+    font-size: calc(72px + 2vmin);
+}
+
+p {
+    color: #FFFFFF;
+    text-shadow: 1px 3px 0 #000000, 1px 13px 10px #000000;
+}
