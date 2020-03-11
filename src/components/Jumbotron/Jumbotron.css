@@ -22,7 +22,7 @@
     font-size: calc(72px + 2vmin);
 }
 
-p {
+.text-shadow {
     color: #FFFFFF;
     text-shadow: 1px 3px 0 #000000, 1px 13px 10px #000000;
 }

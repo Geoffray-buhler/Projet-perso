@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {Jumbotron as BootJumbo, Container} from 'react-bootstrap';
-import './JumbotronCSS.css';
+import './Jumbotron.css';
 
 declare global {
     interface Window { VANTA: any; }
@@ -35,7 +35,7 @@ const Jumbotron = () =>{
         <BootJumbo fluid className="bg-transparent w-100">
             <Container fluid className="text-light text-center mx-auto">
                 <p className="text-shadow h1">Griffont's Game</p>
-                <p>
+                <p className="text-shadow">
                 Port-folio de mes créations vidéo-ludique ainsi que Web / Web mobile.
                 </p>
             </Container>
