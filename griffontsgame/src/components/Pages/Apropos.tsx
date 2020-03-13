@@ -7,6 +7,7 @@ const Apropos = () => {
                 <div className="row">
                     <div className="col-12 text-light">
                         <h1>A Propo de Moi</h1>
+                        <p>Je suis dev</p>
                     </div>
                 </div>
             </div>

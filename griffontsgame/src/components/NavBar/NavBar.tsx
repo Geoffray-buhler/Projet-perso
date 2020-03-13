@@ -8,7 +8,6 @@ import { Nav } from 'react-bootstrap';
 
 
 const NavBar = () =>{
-
     return(
         <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between shadow-lg" bg="dark" variant="dark" expand="lg">
             <Navbar.Brand href="/">
