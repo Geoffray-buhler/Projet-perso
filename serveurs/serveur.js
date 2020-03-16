@@ -6,6 +6,7 @@ const mariadb = require('mariadb');
 
 const bodyParser = require('body-parser');
 
+
 const pooluser = mariadb.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER_USER,
@@ -64,8 +65,6 @@ app.post('/users', function(req, res){
 })
 
 app.patch('/register', function(req,res){
-
-
     let conn;
     let Pseudo = req.body.Pseudo
     let Password = req.body.Password

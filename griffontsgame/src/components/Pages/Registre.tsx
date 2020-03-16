@@ -23,7 +23,6 @@ class Registre extends React.Component {
                 email: this.state.Email})
 
             fetch('http://localhost:3001/register/',{method:'PATCH',
-                                                    mode:'no-cors',
                                                     body:bodyReg,
                                                     headers: {
                                                         'Content-Type': 'application/json'
@@ -31,7 +30,7 @@ class Registre extends React.Component {
                                                     cache:'default'})
         }
 
-    handleChange(event:any) {
+    handleChange = (event:any) => {
         const $inputEl: HTMLInputElement = event.target;
         const inputName: string = $inputEl.id;
         const inputValue: string = $inputEl.value;
