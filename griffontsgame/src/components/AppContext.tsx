@@ -3,6 +3,7 @@ import React from 'react';
 export interface AppState {
     currentUser: any ,
     currentId: number | null,
+    role?: string,
     addUser?: () => void,
     loginUser?: (username: string, password: string) => void
   }

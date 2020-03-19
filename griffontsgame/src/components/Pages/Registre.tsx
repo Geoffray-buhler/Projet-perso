@@ -7,11 +7,11 @@ class Registre extends React.Component {
     }
 
     state={
-        Password:'',
-        Passwordbis:'',
         Login:'',
         Pseudo:'',
         Email:'',
+        Password:'',
+        Passwordbis:'',
         ErrMsg:'Les mots de passe ne sont pas les même'
     }
 
@@ -20,25 +20,38 @@ class Registre extends React.Component {
                 pseudo: this.state.Pseudo,
                 password: this.state.Password,
                 login: this.state.Login,
-                email: this.state.Email})
-
-            fetch('http://localhost:3001/register/',{method:'PATCH',
+                email: this.state.Email
+            })
+            fetch('http://localhost:3001/register/',{method:'POST',
                                                     body:bodyReg,
                                                     headers: {
                                                         'Content-Type': 'application/json'
                                                     },
-                                                    cache:'default'})
-        }
+                                                    cache:'default'
+                                                    })
+    }
 
     handleChange = (event:any) => {
         const $inputEl: HTMLInputElement = event.target;
         const inputName: string = $inputEl.id;
         const inputValue: string = $inputEl.value;
-        const patchState = {
-            [inputName]: inputValue
-        };
-
-        this.setState(patchState);
+        switch (inputName){
+            case 'Login':
+                this.setState({Login : inputValue})
+            break
+            case 'Pseudo':
+                this.setState({Pseudo : inputValue})
+            break
+            case 'Email':
+                this.setState({Email : inputValue})
+            break
+            case 'Password':
+                this.setState({Password : inputValue})
+            break
+            case 'Passwordbis':
+                this.setState({Passwordbis : inputValue})
+            break
+        }
     }
 
     onCompare = () => {
@@ -46,7 +59,7 @@ class Registre extends React.Component {
         {
             this.onRegister();
         }
-            return (this.state.ErrMsg);
+        return (this.state.ErrMsg);
     }
 
     render(){
@@ -62,7 +75,7 @@ class Registre extends React.Component {
                             <input type="text" id="Email" value={this.state.Email} onChange={this.handleChange} className="mb-3 rounded" placeholder="E-mail"></input>
                             <input type="password" id="Password" className="mb-3 rounded" value={this.state.Password} onChange={this.handleChange} placeholder="Mot de passe"></input>
                             <input type="password" id="Passwordbis" className="mb-3 rounded" value={this.state.Passwordbis} onChange={this.handleChange} placeholder="Remettre votre mot de passe"></input>
-                            <a className="btn btn-danger mr-2 mt-3 mb-2" onClick={this.onCompare}>Crées</a>
+                            <a className="btn btn-danger mr-2 mt-3 mb-2" onClick={this.onCompare}>Créer</a>
                         </div>
                     </div>
                 </div>

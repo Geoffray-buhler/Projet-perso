@@ -11,13 +11,14 @@ export default class Connection extends React.Component {
     };
 
     CheckUser = () => {
+
         let post = JSON.stringify({
             login: this.state.login,
-            password: this.state.password
+            psw: this.state.password
         })
+
         if(this.state.login && this.state.password){
             fetch('http://localhost:3001/users/',{method:'POST',
-                                                mode:'no-cors',
                                                 body:post,
                                                 headers: {
                                                     'Content-Type': 'application/json'
@@ -25,10 +26,11 @@ export default class Connection extends React.Component {
                                                 cache:'default'})
                 .then(res => {
                     console.log(res)
-                    // this.setState({
-                    //     currentUser: res.Pseudo,
-                    //     currentId: res.Id
-                    // })
+
+                    this.setState({
+                        currentUser: res.body
+                    })
+
                 })
                 .then(err => {
                     this.setState({
@@ -62,6 +64,7 @@ export default class Connection extends React.Component {
                             <DropdownButton variant="info" id="dropdown-basic-button" title="Connection">
                                 <div className="d-flex flex-column justify-content-center p-2">
                                     <h5>Hello { (value.currentUser as any).Pseudo } !</h5>
+                                    <Link to="/profile">Profile</Link>
                                 </div>
                             </DropdownButton>
                         )
@@ -73,7 +76,7 @@ export default class Connection extends React.Component {
                                 <input type="text" id="Login" value={this.state.login} onChange={this.onUpdateLoginState}></input>
                                 <h5 className="text-center">Mot de passe</h5>
                                 <input type="password" id="Password" value={this.state.password} onChange={this.onUpdatePasswordState}></input>
-                                <button className="btn btn-info mt-2" onClick={ () => (value as any).CheckUser()/*this.CheckUser*/}>Connection</button>
+                                <button className="btn btn-info mt-2" onClick={ () => this.CheckUser() }>Connection</button>
                                 <p className="text-dark text-center">Si vous avez pas de compte <Link to="/cgu">cree en un !</Link></p>
                             </div>
                         </DropdownButton>

@@ -5,3 +5,9 @@
     margin-right: auto;
     margin-left: auto;
   }
+
+  .color-nav{
+    background: rgb(0,30,36);
+    border: 5px ridge #10879B;
+    border-radius: 1px;
+  }

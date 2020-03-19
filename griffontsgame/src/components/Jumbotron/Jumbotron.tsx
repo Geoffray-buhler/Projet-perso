@@ -16,17 +16,16 @@ const Jumbotron = () =>{
      */
     useEffect(() => {
         if(window.VANTA){
-            console.log("BIND VANTA")
             window.VANTA.CELLS({
                 el: "#bgAnim",
-                mouseControls: true,
-                touchControls: true,
+                mouseControls: false,
+                touchControls: false,
                 minHeight: 200.00,
                 minWidth: 200.00,
-                scale: 1.00,
+                scale: 0.50,
                 color1: 0xffff,
                 color2: 0xc2ff,
-                speed: 3.30
+                speed: 1.50
             }) 
         }
     }, [])
