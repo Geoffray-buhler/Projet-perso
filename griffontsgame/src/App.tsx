@@ -28,20 +28,20 @@ export default class App extends React.Component {
       addUser: () => {
   
       },
-      loginUser: this.loginUser
+      // loginUser: this.loginUser
     };
   }
 
-  loginUser = (username: string, password: string) => {
-    setTimeout(() => {
-      this.setState({
-        ...this.state,
-        currentUser: {
-          username,
-        }
-      })
-    }, 100)
-  }
+  // loginUser = (username: string, password: string) => {
+  //   setTimeout(() => {
+  //     this.setState({
+  //       ...this.state,
+  //       currentUser: {
+  //         username,
+  //       }
+  //     })
+  //   }, 100)
+  // }
 
   render () {
     return (

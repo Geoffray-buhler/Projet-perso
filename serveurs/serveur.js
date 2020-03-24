@@ -4,9 +4,6 @@ const app = express()
 
 const mariadb = require('mariadb');
 
-const bodyParser = require('body-parser');
-
-
 const pooluser = mariadb.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER_USER,
@@ -37,7 +34,7 @@ app.use((req, res, next) => {
 app.use(express.json() );       // to support JSON-encoded bodies
 
 //Get a user with ID and return to client
-app.post('/users', express.json(), function(req, res){
+app.post('/user', express.json(), function(req, res){
 
     let conn;
     let login = req.body.login
@@ -48,28 +45,27 @@ app.post('/users', express.json(), function(req, res){
         .then(_conn => {
 
             conn = _conn;
-            console.log('Ok ! Connected!')
-            conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //prepare login and password variable
-            
-        )})
-
-        .then(data => { 
-            if (data){
-                res.send(data)
-            }
-            res.send('utilisateur inconnue !')
-        })
-
-        .catch(err => {
-            console.error(err);
-            return('Paramètre de connection incorrecte');
-        })
-
-        .finally(() => {
-            conn && conn.release();
+            console.log('Ok ! Connected! Dova Gros Con!')
+            conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //prepare login and password variable 
+            )
+            .then(data => { 
+                if (data){
+                    res.send(data)
+                }
+                res.send('utilisateur inconnue !')
+            })
+            .catch(err => {
+                console.error(err);
+                return('Paramètre de connection incorrecte');
+            })
+    
+            .finally(() => {
+                conn && conn.release();
+            })
         })
 })
 
+//Register a new account and add this to BDD
 app.post('/register', function(req,res){
 
     let conn;
@@ -86,12 +82,86 @@ app.post('/register', function(req,res){
             conn.query("INSERT INTO users (Pseudo,Password,Login,E_mail) VALUES (?,?,?,?)",[Pseudo,Password,Login,E_mail])
         })
 
-        .then(data => { 
+        .then(data => {
             if (data){
                 res.send(data)
             }
         })
 })
+
+//Get all game 
+app.post('/games', function(req,res){
+    let conn;
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT * FROM game")
+                .then(data => {
+                    res.send(data)
+                })
+        })
+})
+
+//Get just a pseudo of all account
+app.post('/users',function(req,res){
+    let conn;
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT Pseudo, FROM users")
+                .then(data => {
+                    res.send(data)
+                })
+        })
+})
+
+//Get Principal Game
+app.post('/gameprinc', function(req,res){
+    let conn;
+    let Gamename = req.body.gamename
+
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT * FROM game WHERE title = ? AND Principal = '1'", [Gamename])
+                .then(data => {
+                    res.send(data)
+                })
+        })
+})
+
+//Get secondary Game
+app.post('/game', function(req,res){
+    let conn;
+    let gamename = req.body.gamename
+
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT * FROM game WHERE title = ? AND Principal = '0'",[gamename])
+                .then(data => {
+                    res.send(data)
+                })
+        })
+})
+
+//Add new game in BDD
+app.post('/newgame',function(req,res){
+    let conn;
+    let gamename = req.body.gamename
+    let gamebody = req.body.gamebody
+    let gamelink = req.body.gamelink
+    let gamescreen = req.body.gamescreen
+    let isprincipal = req.body.isprincipal
+
+    pooladmin.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("INSERT INTO game (Title,Body,DownloadLink,ScreenShot,Principal) VALUE (?,?,?,?,?)",[gamename,gamebody,gamelink,gamescreen,isprincipal])
+                .then
+        })
+})
+
 
 app.listen(port, function(){
     console.log(`serveur ecoute le port ${port}!`)

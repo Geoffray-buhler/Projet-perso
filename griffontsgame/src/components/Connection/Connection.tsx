@@ -28,7 +28,7 @@ export default class Connection extends React.Component {
                     console.log(res)
 
                     this.setState({
-                        currentUser: res.body
+                        currentUser: res
                     })
 
                 })

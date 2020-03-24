@@ -10,7 +10,7 @@ const Norage = () => {
                         <h3 className="mb-3">petit jeu de karting</h3>
                         <h3 className="mb-3">Tous ca tous ca !!!</h3>
                         <h3 className="mb-3">tester et commenter</h3>
-                        <a className="btn btn-danger mr-2 mt-3 mb-2">Telechargement</a>
+                        <a className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
                     </div>
                 </div>
             </div>

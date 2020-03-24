@@ -16,3 +16,15 @@
   font-size: calc(10px + 2vmin);
   color: #252525;
 }
+
+.btn {
+  transform:skewX(-20deg);
+  border-radius:0px!important;
+  overflow: hidden;
+  position: relative;
+}
+
+.btn:hover {
+  transform:skewX(-20deg) translateY(-5px);
+  box-shadow: 0px 37px 30px -4px rgba(0,0,0,0.58);
+}

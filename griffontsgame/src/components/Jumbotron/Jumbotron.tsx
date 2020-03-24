@@ -25,7 +25,7 @@ const Jumbotron = () =>{
                 scale: 0.50,
                 color1: 0xffff,
                 color2: 0xc2ff,
-                speed: 1.50
+                speed: 1.00
             }) 
         }
     }, [])

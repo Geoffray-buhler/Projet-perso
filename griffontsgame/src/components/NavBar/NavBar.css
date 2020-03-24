@@ -11,3 +11,8 @@
     border: 5px ridge #10879B;
     border-radius: 1px;
   }
+
+  .btn-bg-custom {
+    background-color: #94e438!important;
+    color: #111111!important;
+  }

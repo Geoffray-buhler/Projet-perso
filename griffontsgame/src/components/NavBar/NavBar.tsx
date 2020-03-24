@@ -26,13 +26,13 @@ export default class NavBar extends React.Component {
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse className=" justify-content-between" id="navbar-nav">
                     <Nav.Link>
-                        <Link className="btn btn-danger" to="/">Accueil</Link>
+                        <Link className="btn btn-bg-custom custom-skew" to="/">Accueil</Link>
                     </Nav.Link>
                     <Nav.Link>
-                        <Link className="btn btn-danger" to="/Norage_Kart">Norage Kart</Link>
+                        <Link className="btn btn-bg-custom custom-skew" to="/Norage_Kart">Norage Kart</Link>
                     </Nav.Link>
                     <Nav.Link>
-                        <Link className="btn btn-danger" to="/Boss_Rush">Boss Rush</Link>
+                        <Link className="btn btn-bg-custom custom-skew" to="/Boss_Rush">Boss Rush</Link>
                     </Nav.Link>
                     <DropdownMenu></DropdownMenu>
                 </Navbar.Collapse>
