@@ -45,14 +45,16 @@ app.post('/user', express.json(), function(req, res){
         .then(_conn => {
 
             conn = _conn;
-            console.log('Ok ! Connected! Dova Gros Con!')
+            console.log('Ok ! Connected!')
             conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //prepare login and password variable 
             )
             .then(data => { 
-                if (data){
+                if (data.length === 0){
+                    res.send('utilisateur inconnue !')
+                }else {
                     res.send(data)
                 }
-                res.send('utilisateur inconnue !')
+                
             })
             .catch(err => {
                 console.error(err);
@@ -79,14 +81,15 @@ app.post('/register', function(req,res){
         .then(_conn => {
             conn = _conn;
             console.log('Ok ! Register OK !')
-            conn.query("INSERT INTO users (Pseudo,Password,Login,E_mail) VALUES (?,?,?,?)",[Pseudo,Password,Login,E_mail])
+            conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,Password,Login,E_mail])
+            .then(data => {
+                if (data){
+                    res.send(data)
+                }
+            })
         })
 
-        .then(data => {
-            if (data){
-                res.send(data)
-            }
-        })
+       
 })
 
 //Get all game 
@@ -118,12 +121,12 @@ app.post('/users',function(req,res){
 //Get Principal Game
 app.post('/gameprinc', function(req,res){
     let conn;
-    let Gamename = req.body.gamename
+    let Gamename = req.body.name
 
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
-            conn.query("SELECT * FROM game WHERE title = ? AND Principal = '1'", [Gamename])
+            conn.query("SELECT * FROM games WHERE Title = ? AND principal = '1'", [Gamename])
                 .then(data => {
                     res.send(data)
                 })
@@ -138,7 +141,7 @@ app.post('/game', function(req,res){
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
-            conn.query("SELECT * FROM game WHERE title = ? AND Principal = '0'",[gamename])
+            conn.query("SELECT * FROM games WHERE title = ? AND Principal = '0'",[gamename])
                 .then(data => {
                     res.send(data)
                 })
@@ -157,7 +160,7 @@ app.post('/newgame',function(req,res){
     pooladmin.getConnection()
         .then(_conn => {
             conn = _conn;
-            conn.query("INSERT INTO game (Title,Body,DownloadLink,ScreenShot,Principal) VALUE (?,?,?,?,?)",[gamename,gamebody,gamelink,gamescreen,isprincipal])
+            conn.query("INSERT INTO games (Title,Body,DownloadLink,ScreenShot,Principal) VALUE (?,?,?,?,?)",[gamename,gamebody,gamelink,gamescreen,isprincipal])
                 .then
         })
 })

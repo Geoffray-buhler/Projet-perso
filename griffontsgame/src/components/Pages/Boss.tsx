@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../model/I_database_inteface.d.ts';
 
 export default class Boss extends React.Component {
     state = {
@@ -9,7 +10,7 @@ export default class Boss extends React.Component {
     }
 
     componentDidMount(){
-
+        this.getgame();
     }
 
     getgame(){
@@ -24,22 +25,25 @@ export default class Boss extends React.Component {
                                                     'Content-Type': 'application/json'
                                                 },
                                                 cache:'default'})
-            .then(data => this.setState({
+            .then(res => res.json())
+            .then(data =>{
+                console.log(data.body)
+                this.setState({
                 bodygame: data.body
-            }))
+            })})
+            .catch(err => console.log(err))
     }
 
     render(){
-        return (
+        return(
         <div className="App">
             <div className="container">
                 <div className="row">
                     <div className="col-12 text-light">
-                        <h1 className="mb-3">Boss Rush</h1>
-                        <h3 className="mb-3">petit jeu de Boss rush</h3>
-                        <h3 className="mb-3">Tous ca tous ca !!!</h3>
-                        <h3 className="mb-3">tester et commenter</h3>
-                        <a href="" className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
+                        <h1 className="mb-3">{this.state.gamename}</h1>
+                        <p className="mb-3">{this.state.bodygame}</p>
+                        <img src={this.state.bodygame}/>
+                        <a href={this.state.bodygame} className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
                     </div>
                 </div>
             </div>

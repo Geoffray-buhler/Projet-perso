@@ -18,7 +18,7 @@ export default class Connection extends React.Component {
         })
 
         if(this.state.login && this.state.password){
-            fetch('http://localhost:3001/users/',{method:'POST',
+            fetch('http://localhost:3001/user/',{method:'POST',
                                                 body:post,
                                                 headers: {
                                                     'Content-Type': 'application/json'
