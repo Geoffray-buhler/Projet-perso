@@ -15,6 +15,23 @@ export default class NavBar extends React.Component {
         username: "Griffont's Game"
     }
 
+    componentDidMount(){
+        this.getAllGame();
+    }
+
+    getAllGame(){
+        fetch('http://localhost:3001/allgames/',{method:'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                cache:'default'})
+            .then(res => res.json())
+            .then(data =>{
+                console.log(data)
+            })
+            .catch(err => console.log(err))
+        }
+
     render(){
         return(
             <Navbar className="navbar navbar-expand-lg justify-content-between color-nav shadow-lg" variant="dark" expand="lg">

@@ -1,4 +1,5 @@
 import React from 'react';
+import './AllPages.css';
 
 const Apropos = () => {
     return(

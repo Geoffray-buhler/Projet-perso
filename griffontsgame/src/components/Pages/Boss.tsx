@@ -1,5 +1,7 @@
 import React from 'react';
 import '../../model/I_database_inteface.d.ts';
+import './AllPages.css';
+
 
 export default class Boss extends React.Component {
     state = {
@@ -7,6 +9,7 @@ export default class Boss extends React.Component {
         bodygame: '',
         screengame:'',
         linkgame:'',
+        themegame:''
     }
 
     componentDidMount(){
@@ -27,9 +30,11 @@ export default class Boss extends React.Component {
                                                 cache:'default'})
             .then(res => res.json())
             .then(data =>{
-                console.log(data.body)
                 this.setState({
-                bodygame: data.body
+                bodygame: data[0].description,
+                screengame:data[0].screenshot,
+                linkgame:data[0].link,
+                themegame:data[0].Theme
             })})
             .catch(err => console.log(err))
     }
@@ -42,8 +47,10 @@ export default class Boss extends React.Component {
                     <div className="col-12 text-light">
                         <h1 className="mb-3">{this.state.gamename}</h1>
                         <p className="mb-3">{this.state.bodygame}</p>
-                        <img src={this.state.bodygame}/>
-                        <a href={this.state.bodygame} className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
+                        <label>Genre</label>
+                        <h3 className="mb-3">{this.state.themegame}</h3>
+                        <img className="screenshot" src={this.state.screengame}/><br></br>
+                        <a href={this.state.linkgame} className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
                     </div>
                 </div>
             </div>

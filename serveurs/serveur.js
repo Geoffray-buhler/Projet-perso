@@ -87,21 +87,35 @@ app.post('/register', function(req,res){
                     res.send(data)
                 }
             })
+            .catch(err => {
+                console.error(err);
+                return('Erreur a la creation du compte');
+            })
+            .finally(() => {
+                conn && conn.release();
+            })
         })
 
        
 })
 
 //Get all game 
-app.post('/games', function(req,res){
+app.post('/allgames', function(req,res){
     let conn;
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
-            conn.query("SELECT * FROM game")
+            conn.query("SELECT * FROM games")
                 .then(data => {
                     res.send(data)
                 })
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
         })
 })
 
@@ -115,6 +129,13 @@ app.post('/users',function(req,res){
                 .then(data => {
                     res.send(data)
                 })
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
         })
 })
 
@@ -131,6 +152,13 @@ app.post('/gameprinc', function(req,res){
                     res.send(data)
                 })
         })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
+        })
 })
 
 //Get secondary Game
@@ -145,6 +173,13 @@ app.post('/game', function(req,res){
                 .then(data => {
                     res.send(data)
                 })
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
         })
 })
 
@@ -162,6 +197,13 @@ app.post('/newgame',function(req,res){
             conn = _conn;
             conn.query("INSERT INTO games (Title,Body,DownloadLink,ScreenShot,Principal) VALUE (?,?,?,?,?)",[gamename,gamebody,gamelink,gamescreen,isprincipal])
                 .then
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la creation du nouveau jeu');
+        })
+        .finally(() => {
+            conn && conn.release();
         })
 })
 
