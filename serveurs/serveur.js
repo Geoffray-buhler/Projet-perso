@@ -43,7 +43,6 @@ app.post('/user', express.json(), function(req, res){
     pooluser.getConnection()
     
         .then(_conn => {
-
             conn = _conn;
             console.log('Ok ! Connected!')
             conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //prepare login and password variable 
@@ -95,8 +94,6 @@ app.post('/register', function(req,res){
                 conn && conn.release();
             })
         })
-
-       
 })
 
 //Get all game 
@@ -106,6 +103,46 @@ app.post('/allgames', function(req,res){
         .then(_conn => {
             conn = _conn;
             conn.query("SELECT * FROM games")
+                .then(data => {
+                    res.send(data)
+                })
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
+        })
+})
+
+//Get all Secondary Games
+app.post('/allgamessec',function(req,res){
+    let conn;
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT * FROM games WHERE principal = '0'")
+                .then(data => {
+                    res.send(data)
+                })
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
+        })
+})
+
+//Get all Primary Games
+app.post('/allgamespri',function(req,res){
+    let conn;
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT * FROM games WHERE principal = '1'")
                 .then(data => {
                     res.send(data)
                 })
@@ -162,7 +199,7 @@ app.post('/gameprinc', function(req,res){
 })
 
 //Get secondary Game
-app.post('/game', function(req,res){
+app.post('/gamesecond', function(req,res){
     let conn;
     let gamename = req.body.gamename
 

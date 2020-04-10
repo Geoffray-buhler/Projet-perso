@@ -14,13 +14,13 @@ import Contact from '../Pages/Contact';
 const Routes = () =>{
     return(
             <Switch>
-                <Route path="/Norage_Kart">
+                <Route path="/Norage Kart">
                     <Norage/>
                 </Route>
-                <Route path="/Boss_Rush">
+                <Route path="/Boss Rush">
                     <Boss/>
                 </Route>
-                <Route path="/action-1">
+                <Route path="/Seconde games">
                     <SecondGames/>
                 </Route>
                 <Route path="/cgu">

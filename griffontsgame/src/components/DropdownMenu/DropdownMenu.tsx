@@ -1,16 +1,30 @@
 import React from 'react';
 import {DropdownButton, Dropdown} from 'react-bootstrap';
 import './DropdownMenu.css';
+import AppContext from '../AppContext';
 
-const DropdownMenu = () =>{
+export default class DropdownMenu extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return(
-        <DropdownButton variant="success" id="dropdown-basic-button" title="Jeux challenge 2 Heure">
-            <Dropdown.Item href="/action-1">1er jeu</Dropdown.Item>
-            <Dropdown.Item href="/action-2">2eme jeu</Dropdown.Item>
-            <Dropdown.Item href="/action-3">3eme jeu</Dropdown.Item>
-        </DropdownButton>
-    )
+    protected generateTitlesSecLinks():any {
+        if(this.context.btnTitleSec.length === 0){
+            return <div>Chargement ...</div>
+        }else{
+            return this.context.btnTitleSec.map((item) => {
+                return <Dropdown.Item className="btn btn-grey" href="Seconde games">{item.Title}</Dropdown.Item>
+            });
+        }
+    }
+
+    render(){
+        return(
+            <DropdownButton variant="success" id="dropdown-basic-button" title="Jeux challenge 2 Heures">
+                { this.generateTitlesSecLinks() }
+            </DropdownButton>
+        )
+    }
 }
 
-export default DropdownMenu;
+DropdownMenu.contextType = AppContext;

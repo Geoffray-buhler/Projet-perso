@@ -9,9 +9,9 @@ const Accueil = () => {
             <div className="row">
               <div className="col-12 text-light custom-bg p-4">
                   <h1 className="mb-3">PRESENTATION</h1>
-                  <p className="mb-3">Bonjour sur ce site vous trouverais diverts travaux que j'ai fait durant ma formation ainsi que ce que je fait durant mes live Twitch !!!</p>
+                  <p className="mb-3">Bonjour sur ce site vous trouverez divers travaux que j'ai fait durant ma formation ainsi que ce que je fais durant mes lives Twitch !!!</p>
                   <p>Dans l'espoir de vous voir commenter mes creations</p>
-                  <p>Hesitez pas a donner votre avis !</p>
+                  <p>N'hésitez pas à donner votre avis !</p>
                   <p>Bisous poilus barbus</p>
                   <Link className="btn btn-info mr-2 mt-3 mb-2" to="/APropos">A propos</Link>
                   <Link className="btn btn-success mt-3 mb-2" to="/Contact">Contact</Link>

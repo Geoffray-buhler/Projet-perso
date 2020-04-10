@@ -8,7 +8,7 @@ const CGU = () => {
         <div className="App">
             <div className="container">
                     <div className="row">
-                        <div className="col-12 text-light">
+                        <div className="col-12 text-light custom-bg">
                             <h1 className="mb-3">Etes vous d'accord ?</h1>
                             <h3>Préambule</h3>
                             <p>

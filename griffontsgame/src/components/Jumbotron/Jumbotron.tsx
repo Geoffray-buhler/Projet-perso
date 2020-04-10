@@ -29,17 +29,18 @@ const Jumbotron = () =>{
             }) 
         }
     }, [])
+    
     return(
-    <header id="bgAnim" className="App-header rounded-lg">
-        <BootJumbo fluid className="bg-transparent w-100">
-            <Container fluid className="text-light text-center mx-auto">
-                <p className="text-shadow h1">Griffont's Game</p>
-                <p className="text-shadow">
-                Port-folio de mes créations vidéo-ludique ainsi que Web / Web mobile.
-                </p>
-            </Container>
-        </BootJumbo>
-    </header>
+        <header id="bgAnim" className="App-header rounded-lg">
+            <BootJumbo fluid className="bg-transparent w-100">
+                <Container fluid className="text-light text-center mx-auto">
+                    <p className="text-shadow h1">Griffont's Game</p>
+                    <p className="text-shadow">
+                    Port-folio de mes créations vidéo-ludique ainsi que Web / Web mobile.
+                    </p>
+                </Container>
+            </BootJumbo>
+        </header>
     )
 }
 

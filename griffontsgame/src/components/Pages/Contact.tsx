@@ -9,7 +9,7 @@ const Apropos = () => {
         <div className="App">
             <div className="container">
                 <div className="row">
-                    <div className="col-12 text-light">
+                    <div className="col-12 text-light custom-bg">
                         <h1>Contactez mwé</h1>
                         <Form>
                             <Form.Row>

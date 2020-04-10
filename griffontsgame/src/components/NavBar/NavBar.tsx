@@ -1,38 +1,35 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar'
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import Navbar from 'react-bootstrap/Navbar';
 import Connection from '../Connection/Connection';
 import {Link} from "react-router-dom";
 import Logo from '../Logo/Logo';
 import { Nav } from 'react-bootstrap';
 import'./NavBar.css';
 import'../AppContext';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import AppContext from '../AppContext';
 
 
 export default class NavBar extends React.Component {
+    constructor(props){
+        super(props)
+    }
 
     state = {
-        username: "Griffont's Game"
-    }
-
-    componentDidMount(){
-        this.getAllGame();
-    }
-
-    getAllGame(){
-        fetch('http://localhost:3001/allgames/',{method:'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                cache:'default'})
-            .then(res => res.json())
-            .then(data =>{
-                console.log(data)
-            })
-            .catch(err => console.log(err))
+        username: "Griffont's Game",
         }
 
-    render(){
+    protected generateTitlesLinks():any {
+        if(this.context.btnTitlePrim.length === 0){
+            return <div>C'est de la merde !!!</div>
+        }else{
+            return this.context.btnTitlePrim.map((item) => {
+                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.Title}>{item.Title}</Link></Nav.Link>
+            });
+        }
+    }
+
+    public render(){
         return(
             <Navbar className="navbar navbar-expand-lg justify-content-between color-nav shadow-lg" variant="dark" expand="lg">
                 <Navbar.Brand href="/">
@@ -45,15 +42,12 @@ export default class NavBar extends React.Component {
                     <Nav.Link>
                         <Link className="btn btn-bg-custom custom-skew" to="/">Accueil</Link>
                     </Nav.Link>
-                    <Nav.Link>
-                        <Link className="btn btn-bg-custom custom-skew" to="/Norage_Kart">Norage Kart</Link>
-                    </Nav.Link>
-                    <Nav.Link>
-                        <Link className="btn btn-bg-custom custom-skew" to="/Boss_Rush">Boss Rush</Link>
-                    </Nav.Link>
+                    { this.generateTitlesLinks() }
                     <DropdownMenu></DropdownMenu>
                 </Navbar.Collapse>
             </Navbar>
         )
     }
 }
+
+NavBar.contextType = AppContext;

@@ -68,7 +68,7 @@ class Registre extends React.Component {
             <div className="App">
                 <div className="container">
                     <div className="row">
-                        <div className="col-10 offset-1 text-light d-flex flex-column">
+                        <div className="col-10 offset-1 custom-bg text-light d-flex flex-column">
                             <h1 className="mb-3">Création de compte</h1>
                             <h3 id='errDiv' className="text-red"></h3>
                             <input type="text" id="Pseudo" value={this.state.Pseudo} onChange={this.handleChange} className="mb-3 rounded" placeholder="Pseudo"></input>

@@ -10,10 +10,8 @@ import Routes from './components/Route/Routes';
 import NavBar from './components/NavBar/NavBar';
 import Jumbotron from './components/Jumbotron/Jumbotron';
 import Footer from './components/Footer/Footer';
-import AppContext, { AppState } from './components/AppContext';
-
-
-
+import AppContext from './components/AppContext';
+import {AppState} from './model/I_database_inteface';
 
 export default class App extends React.Component {
  
@@ -25,23 +23,43 @@ export default class App extends React.Component {
     this.state = {
       currentUser: null,
       currentId: null,
-      addUser: () => {
-  
-      },
-      // loginUser: this.loginUser
+      gamename: "All Right Bro",
+      btnTitleSec:[] as Array<AppState>,
+      btnTitlePrim:[] as Array<AppState>
     };
   }
 
-  // loginUser = (username: string, password: string) => {
-  //   setTimeout(() => {
-  //     this.setState({
-  //       ...this.state,
-  //       currentUser: {
-  //         username,
-  //       }
-  //     })
-  //   }, 100)
-  // }
+  componentDidMount(){
+    this.getAllSecGame();
+    this.getAllprimGame();
+}
+
+protected getAllprimGame(){
+  fetch('http://localhost:3001/allgamespri/',{method:'POST',
+                                          headers: {
+                                              'Content-Type':'application/json'
+                                          },
+                                          cache:'default'})
+      .then(res => res.json())
+      .then(data => this.setState({btnTitlePrim:data}, () => {console.log(this.state.btnTitlePrim)}))
+      .catch(err => console.log(err))
+}
+
+protected getAllSecGame(){
+    fetch('http://localhost:3001/allgamessec/',{method:'POST',
+                                            headers: {
+                                                'Content-Type':'application/json'
+                                            },
+                                            cache:'default'})
+        .then(res => res.json())
+        .then(data => this.setState({btnTitleSec:data}, () => {console.log(this.state.btnTitleSec)}))
+        .catch(err => console.log(err))
+}
+
+  changeGameState = (newname) =>{
+    console.log("Ui!")
+    this.setState({gamename:newname})
+  }
 
   render () {
     return (

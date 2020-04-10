@@ -34,7 +34,8 @@ getgame(){
             screengame:data[0].screenshot,
             linkgame:data[0].link,
             themegame:data[0].Theme
-        })})
+            })
+          })
         .catch(err => console.log(err))
 }
 
@@ -43,12 +44,12 @@ getgame(){
       <div className="App">
       <div className="container">
           <div className="row">
-              <div className="col-12 text-light">
+              <div className="col-12 text-light custom-bg">
                   <h1 className="mb-3">{this.state.gamename}</h1>
                   <p className="mb-3">{this.state.bodygame}</p>
                   <label>Genre</label>
                   <h3 className="mb-3">{this.state.themegame}</h3>
-                  <img className="screenshot" src={this.state.screengame}/>
+                  <img className="screenshot" alt="" src={this.state.screengame}/><br></br>
                   <a href={this.state.linkgame} className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
               </div>
           </div>

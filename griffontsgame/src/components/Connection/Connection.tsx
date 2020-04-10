@@ -30,7 +30,6 @@ export default class Connection extends React.Component {
                     this.setState({
                         currentUser: res
                     })
-
                 })
                 .then(err => {
                     this.setState({

@@ -1,16 +1,12 @@
 import React from 'react';
-
-export interface AppState {
-    currentUser: any ,
-    currentId: number | null,
-    role?: string,
-    addUser?: () => void,
-    loginUser?: (username: string, password: string) => void
-  }
+import {AppState} from '../model/I_database_inteface';
 
 const AppContext = React.createContext<AppState>({
     currentUser: null,
-    currentId:null
+    currentId: null,
+    gamename: "All Right Bro",
+    btnTitleSec:[] as Array<AppState>,
+    btnTitlePrim:[] as Array<AppState>
 });
 
 export default AppContext;

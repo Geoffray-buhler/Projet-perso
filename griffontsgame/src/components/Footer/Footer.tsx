@@ -14,9 +14,9 @@ const Footer = () =>{
                         <Navbar.Brand><h6>Created by MOI</h6></Navbar.Brand>
                         <Navbar.Brand >                
                             <div>
-                                <a className="hovicon effect-8 mr-2 ml-2" href="https://www.linkedin.com/in/geoffray-buhler-93100099/"><img className="svg" src={LogoLink}></img></a>
-                                <a className="hovicon effect-8 mr-2 ml-2" href="https://www.twitch.tv/griffont39/"><img className="svg" src={LogoTwitch}></img></a>
-                                <a className="hovicon effect-8 mr-2 ml-2" href="https://github.com/Geoffray-buhler"><img className="svg" src={LogoGitHub}></img></a>
+                                <a className="hovicon effect-8 mr-2 ml-2" href="https://www.linkedin.com/in/geoffray-buhler-93100099/"><img className="svg" alt="Logo Lien pour ma page linked in" src={LogoLink}></img></a>
+                                <a className="hovicon effect-8 mr-2 ml-2" href="https://www.twitch.tv/griffont39/"><img className="svg" alt="Logo Lien pour ma page Twitch" src={LogoTwitch}></img></a>
+                                <a className="hovicon effect-8 mr-2 ml-2" href="https://github.com/Geoffray-buhler"><img className="svg" alt="Logo Lien pour ma page GitHub" src={LogoGitHub}></img></a>
                             </div>
                         </Navbar.Brand>
                         <Navbar.Brand><h6>© Copyright - 2022</h6></Navbar.Brand>
