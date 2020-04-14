@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const express = require('express')
 const app = express()
 
@@ -41,7 +42,6 @@ app.post('/user', express.json(), function(req, res){
     let psw = req.body.psw
 
     pooluser.getConnection()
-    
         .then(_conn => {
             conn = _conn;
             console.log('Ok ! Connected!')
@@ -53,7 +53,6 @@ app.post('/user', express.json(), function(req, res){
                 }else {
                     res.send(data)
                 }
-                
             })
             .catch(err => {
                 console.error(err);

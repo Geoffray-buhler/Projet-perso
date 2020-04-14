@@ -6,7 +6,7 @@ const AppContext = React.createContext<AppState>({
     currentId: null,
     gamename: "",
     btnTitleSec:[] as Array<AppState>,
-    btnTitlePrim:[] as Array<AppState>
+    btnTitlePrim:[] as Array<AppState>,
 });
 
 export default AppContext;

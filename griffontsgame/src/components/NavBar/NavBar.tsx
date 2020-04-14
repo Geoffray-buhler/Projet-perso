@@ -10,13 +10,13 @@ import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import AppContext from '../AppContext';
 
 
-export default class NavBar extends React.Component <{gamename:any}> {
+export default class NavBar extends React.Component <{FuncGameName:any}> {
     constructor(props){
         super(props)
     }
 
     state = {
-        username: "Griffont's Game",
+        username:"Griffont's Game",
         gamename:""
         }
 
@@ -39,12 +39,12 @@ export default class NavBar extends React.Component <{gamename:any}> {
                 </Navbar.Brand>
                 <Connection></Connection>
                 <Navbar.Toggle aria-controls="navbar-nav" />
-                <Navbar.Collapse className=" justify-content-between" id="navbar-nav">
+                <Navbar.Collapse className="justify-content-between" id="navbar-nav">
                     <Nav.Link>
                         <Link className="btn btn-bg-custom custom-skew" to="/">Accueil</Link>
                     </Nav.Link>
                     {this.generateTitlesLinks()}
-                    <DropdownMenu></DropdownMenu>
+                    <DropdownMenu FuncGameName={this.props.FuncGameName(name)}></DropdownMenu>
                 </Navbar.Collapse>
             </Navbar>
         )

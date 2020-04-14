@@ -3,9 +3,13 @@ import {DropdownButton, Dropdown} from 'react-bootstrap';
 import './DropdownMenu.css';
 import AppContext from '../AppContext';
 
-export default class DropdownMenu extends React.Component {
+export default class DropdownMenu extends React.Component <{FuncGameName}> {
     constructor(props) {
         super(props);
+    }
+
+    protected MakeSomething(name):any {
+        console.log(`Click ! ${name}`)
     }
 
     protected generateTitlesSecLinks():any {
@@ -13,15 +17,15 @@ export default class DropdownMenu extends React.Component {
             return <div>Chargement ...</div>
         }else{
             return this.context.btnTitleSec.map((item) => {
-                return <Dropdown.Item className="btn btn-grey" href="Seconde games">{item.title}</Dropdown.Item>
+                return <Dropdown.Item className="btn btn-grey" onClick={() => this.props.FuncGameName(item.title)}>{item.title}</Dropdown.Item>
             });
         }
     }
 
-    render(){
+    public render(){
         return(
             <DropdownButton variant="success" id="dropdown-basic-button" title="Jeux challenge 2 Heures">
-                { this.generateTitlesSecLinks() }
+                {this.generateTitlesSecLinks()}
             </DropdownButton>
         )
     }

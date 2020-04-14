@@ -25,7 +25,7 @@ export default class App extends React.Component {
       currentId: null,
       gamename: "Darkandinavia Ball",
       btnTitleSec:[] as Array<AppState>,
-      btnTitlePrim:[] as Array<AppState>
+      btnTitlePrim:[] as Array<AppState>,
     };
   }
 
@@ -40,9 +40,7 @@ export default class App extends React.Component {
 
 protected getAllprimGame(){
   fetch('http://localhost:3001/allgamespri/',{method:'POST',
-                                          headers: {
-                                              'Content-Type':'application/json'
-                                          },
+                                          headers: {'Content-Type':'application/json'},
                                           cache:'default'})
       .then(res => res.json())
       .then(data => this.setState({btnTitlePrim:data}, () => {console.log(this.state.btnTitlePrim)}))
@@ -65,7 +63,7 @@ protected getAllSecGame(){
       <Router>
         <AppContext.Provider value={this.state}>
           <Jumbotron></Jumbotron>
-          <NavBar gamename={this.ChangeNameGame}></NavBar>
+          <NavBar FuncGameName={() => this.ChangeNameGame(name)}></NavBar>
           <Routes></Routes>
           <Footer></Footer>
         </AppContext.Provider>
