@@ -23,7 +23,7 @@ export default class App extends React.Component {
     this.state = {
       currentUser: null,
       currentId: null,
-      gamename: "All Right Bro",
+      gamename: "Darkandinavia Ball",
       btnTitleSec:[] as Array<AppState>,
       btnTitlePrim:[] as Array<AppState>
     };
@@ -32,7 +32,11 @@ export default class App extends React.Component {
   componentDidMount(){
     this.getAllSecGame();
     this.getAllprimGame();
-}
+  }
+
+  ChangeNameGame(name:string){
+    this.setState({gamename:name})
+  }
 
 protected getAllprimGame(){
   fetch('http://localhost:3001/allgamespri/',{method:'POST',
@@ -56,17 +60,12 @@ protected getAllSecGame(){
         .catch(err => console.log(err))
 }
 
-  changeGameState = (newname) =>{
-    console.log("Ui!")
-    this.setState({gamename:newname})
-  }
-
-  render () {
+  public render () {
     return (
       <Router>
         <AppContext.Provider value={this.state}>
           <Jumbotron></Jumbotron>
-          <NavBar></NavBar>
+          <NavBar gamename={this.ChangeNameGame}></NavBar>
           <Routes></Routes>
           <Footer></Footer>
         </AppContext.Provider>

@@ -10,21 +10,22 @@ import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import AppContext from '../AppContext';
 
 
-export default class NavBar extends React.Component {
+export default class NavBar extends React.Component <{gamename:any}> {
     constructor(props){
         super(props)
     }
 
     state = {
         username: "Griffont's Game",
+        gamename:""
         }
 
     protected generateTitlesLinks():any {
         if(this.context.btnTitlePrim.length === 0){
-            return <div>C'est de la merde !!!</div>
+            return <div>En chargement...</div>
         }else{
             return this.context.btnTitlePrim.map((item) => {
-                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.Title}>{item.Title}</Link></Nav.Link>
+                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.title}>{item.title}</Link></Nav.Link>
             });
         }
     }
@@ -42,7 +43,7 @@ export default class NavBar extends React.Component {
                     <Nav.Link>
                         <Link className="btn btn-bg-custom custom-skew" to="/">Accueil</Link>
                     </Nav.Link>
-                    { this.generateTitlesLinks() }
+                    {this.generateTitlesLinks()}
                     <DropdownMenu></DropdownMenu>
                 </Navbar.Collapse>
             </Navbar>

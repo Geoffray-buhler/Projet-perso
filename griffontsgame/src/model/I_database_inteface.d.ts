@@ -1,10 +1,10 @@
 export interface IDataBaseGames {
-    Title:string;
+    title:string;
     description:string;
     screenshot:string;
     link:string;
     principal:number;
-    Theme:string;
+    theme:string;
 }
 
 export interface IDataBaseUsers {

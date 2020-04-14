@@ -14,6 +14,7 @@ const Jumbotron = () =>{
      * <script src="./JS/three.r95.min.js"></script>
      * <script src="./JS/vanta.cells.min.js"></script>
      */
+
     useEffect(() => {
         if(window.VANTA){
             window.VANTA.CELLS({
@@ -25,7 +26,7 @@ const Jumbotron = () =>{
                 scale: 0.50,
                 color1: 0xffff,
                 color2: 0xc2ff,
-                speed: 1.00
+                speed: 2.00
             }) 
         }
     }, [])

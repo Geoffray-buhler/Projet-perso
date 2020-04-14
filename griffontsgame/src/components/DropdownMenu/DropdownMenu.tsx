@@ -13,7 +13,7 @@ export default class DropdownMenu extends React.Component {
             return <div>Chargement ...</div>
         }else{
             return this.context.btnTitleSec.map((item) => {
-                return <Dropdown.Item className="btn btn-grey" href="Seconde games">{item.Title}</Dropdown.Item>
+                return <Dropdown.Item className="btn btn-grey" href="Seconde games">{item.title}</Dropdown.Item>
             });
         }
     }
