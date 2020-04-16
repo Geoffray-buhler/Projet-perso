@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,19 +23,24 @@ export default class App extends React.Component {
     this.state = {
       currentUser: null,
       currentId: null,
-      gamename: "Darkandinavia Ball",
+      gamename: "",
       btnTitleSec:[] as Array<AppState>,
-      btnTitlePrim:[] as Array<AppState>,
+      btnTitlePrim:[] as Array<AppState>
     };
+  }
+
+  ChangeNameGame(name){
+    this.setState({gamename:name})
   }
 
   componentDidMount(){
     this.getAllSecGame();
     this.getAllprimGame();
+    this.MsgCustom();
   }
 
-  ChangeNameGame(name:string){
-    this.setState({gamename:name})
+  protected MsgCustom(){
+    console.log("%cCalmez-Vous ❤️","font-size:40px;")
   }
 
 protected getAllprimGame(){
@@ -43,7 +48,7 @@ protected getAllprimGame(){
                                           headers: {'Content-Type':'application/json'},
                                           cache:'default'})
       .then(res => res.json())
-      .then(data => this.setState({btnTitlePrim:data}, () => {console.log(this.state.btnTitlePrim)}))
+      .then(data => this.setState({btnTitlePrim:data}))
       .catch(err => console.log(err))
 }
 
@@ -54,16 +59,16 @@ protected getAllSecGame(){
                                             },
                                             cache:'default'})
         .then(res => res.json())
-        .then(data => this.setState({btnTitleSec:data}, () => {console.log(this.state.btnTitleSec)}))
+        .then(data => this.setState({btnTitleSec:data}))
         .catch(err => console.log(err))
 }
 
   public render () {
     return (
       <Router>
-        <AppContext.Provider value={this.state}>
+        <AppContext.Provider value={ this.state }>
           <Jumbotron></Jumbotron>
-          <NavBar FuncGameName={() => this.ChangeNameGame(name)}></NavBar>
+          <NavBar></NavBar>
           <Routes></Routes>
           <Footer></Footer>
         </AppContext.Provider>

@@ -28,6 +28,7 @@ export interface AppState {
     gamename:string,
     role?: string,
     addUser?: () => void,
+    changeNameGame?: () => void,
     btnTitleSec:Array | null,
     btnTitlePrim:Array | null,
     loginUser?: (username: string, password: string) => void

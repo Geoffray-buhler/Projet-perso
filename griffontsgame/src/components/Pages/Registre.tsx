@@ -23,6 +23,7 @@ class Registre extends React.Component {
                 login: this.state.Login,
                 email: this.state.Email
             })
+            console.log(bodyReg)
             fetch('http://localhost:3001/register/',{method:'POST',
                                                     body:bodyReg,
                                                     headers: {
