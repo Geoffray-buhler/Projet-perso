@@ -9,4 +9,14 @@ const AppContext = React.createContext<AppState>({
     btnTitlePrim:[] as Array<AppState>
 });
 
-export default AppContext;
+// Permet de récupérer rapidement le state de l'app
+// Utilisé par les composants ayant besoin de récupérer une information depuis ce state
+function useAppState() {
+  const context = React.useContext(AppContext)
+  if (context === undefined) {
+    throw new Error('useCountState must be used within a CountProvider')
+  }
+  return context
+}
+
+export default {AppContext,useAppState};

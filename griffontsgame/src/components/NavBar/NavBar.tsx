@@ -11,11 +11,14 @@ import AppContext from '../AppContext';
 
 
 export default class NavBar extends React.Component {
+    constructor(props){
+        super(props)
+    }
 
     state = {
         username:"Griffont's Game",
         gamename:""
-    }
+        }
 
     protected generateTitlesLinks():any {
         if(this.context.btnTitlePrim.length === 0){

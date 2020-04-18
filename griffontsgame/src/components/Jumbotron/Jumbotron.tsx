@@ -8,13 +8,7 @@ declare global {
 
 const Jumbotron = () =>{
 
-    /**
-     * CAUTION
-     * These scripts MUST be included for this component to work
-     * <script src="./JS/three.r95.min.js"></script>
-     * <script src="./JS/vanta.cells.min.js"></script>
-     */
-
+    // Effet qui permettent de faire fonctionner l'effets du jumbotron
     useEffect(() => {
         if(window.VANTA){
             window.VANTA.CELLS({

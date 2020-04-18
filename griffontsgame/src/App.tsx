@@ -11,6 +11,7 @@ import NavBar from './components/NavBar/NavBar';
 import Jumbotron from './components/Jumbotron/Jumbotron';
 import Footer from './components/Footer/Footer';
 import AppContext from './components/AppContext';
+import {appReducer,AppDispatchContext} from './components/DispatcherContext';
 import {AppState} from './model/I_database_inteface';
 
 export default class App extends React.Component {
@@ -29,18 +30,47 @@ export default class App extends React.Component {
     };
   }
 
-  ChangeNameGame(name){
-    this.setState({gamename:name})
+  
+// Provider principal du modèle de notre app
+// Simplement un wrapper permettant de déclarer les contextes nécéssaires
+// Et lier l'ensemble state, dispatch, reducer et state par défaut.
+// Typiquement utilisé ici comme première balise de notre app, englobant l'ensemble
+  AppProvider({children}) {
+  const [state, dispatch] = React.useReducer(appReducer, {activeGame: ''})
+  return (
+      <AppContext.Provider value={state}>
+        <AppDispatchContext.Provider value={dispatch}>
+          {children}
+        </AppDispatchContext.Provider>
+      </AppContext.Provider>
+    )
   }
 
+  //Fonction qui permet de charger mes fonction a la creation de mon composant 
   componentDidMount(){
     this.getAllSecGame();
     this.getAllprimGame();
     this.MsgCustom();
   }
 
+  //Petite fonction pour surprendre les gens qui vont voir le code ^^
   protected MsgCustom(){
     console.log("%cCalmez-Vous ❤️","font-size:40px;")
+  }
+
+  // Notre reducer. Ici il est responsable de toute l'app
+  // (c'est p-e beaucoup, mais l'app reste assez reduite donc pkoi pas)
+  // Il est appelé lorsqu'une action est émise par un dispatcher
+  // Il utilise les informations de cette action pour mettre à jour le state
+  appReducer(state, action) {
+    switch (action.type) {
+      case 'change-game': {
+        return {activeGame: action.newGame}
+      }
+      default: {
+        throw new Error(`Unhandled action type: ${action.type}`)
+      }
+    }
   }
 
 protected getAllprimGame(){
