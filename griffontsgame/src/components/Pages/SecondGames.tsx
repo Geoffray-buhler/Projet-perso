@@ -1,24 +1,19 @@
 import React from 'react';
 import './AllPages.css';
 import { IDataBaseGames } from '../../model/I_database_inteface';
-import AppContext from '../AppContext';
+import {AppContext} from '../../services/AppContext';
 
 export default class SecondeGames extends React.Component {
-
-    constructor(props){
-        super(props)
-    }
 
     context!: React.ContextType<typeof AppContext>;
 
     state = {
-        games: "" as string,
         infogame:[] as Array<IDataBaseGames>
     }
 
     componentDidMount(){
         this.getSecGame();
-      }
+    }
 
     getSecGame(){
         let body = JSON.stringify({
@@ -42,7 +37,9 @@ export default class SecondeGames extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12 custom-bg text-light">
-                            <h1 className="mb-3">En chargement ...</h1>
+                            <div className="spinner-border text-info" role="status">
+                                <span className="sr-only">Chargement...</span>
+                            </div>
                         </div>
                     </div>
                 </div>

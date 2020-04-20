@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,68 +10,51 @@ import Routes from './components/Route/Routes';
 import NavBar from './components/NavBar/NavBar';
 import Jumbotron from './components/Jumbotron/Jumbotron';
 import Footer from './components/Footer/Footer';
-import AppContext from './components/AppContext';
-import {AppState} from './model/I_database_inteface';
+import {AppContext} from './services/AppContext';
+import {appReducer,AppDispatchContext} from './services/DispatcherContext';
+import GameServices from './services/GamesServices';
+
+// Provider principal du modèle de notre app
+// Simplement un wrapper permettant de déclarer les contextes nécéssaires
+// Et lier l'ensemble state, dispatch, reducer et state par défaut.
+// Typiquement utilisé ici comme première balise de notre app, englobant l'ensemble
+  const AppProvider = ({children}) => {
+  const [state, dispatch] = React.useReducer(appReducer, {currentUser: null,
+                                                          currentId: null,
+                                                          gamename: "",
+                                                          btnTitleSec:[],
+                                                          btnTitlePrim:[]})
+  return (
+      <AppContext.Provider value={state}>
+        <AppDispatchContext.Provider value={dispatch}>
+          {children}
+        </AppDispatchContext.Provider>
+      </AppContext.Provider>
+    )
+  }
 
 export default class App extends React.Component {
- 
-  public state: Readonly<AppState>;
 
-  constructor(props: any){
-    super(props);
-
-    this.state = {
-      currentUser: null,
-      currentId: null,
-      gamename: "",
-      btnTitleSec:[] as Array<AppState>,
-      btnTitlePrim:[] as Array<AppState>
-    };
-  }
-
-  ChangeNameGame(name){
-    this.setState({gamename:name})
-  }
-
+  //Fonction qui permet de charger mes fonction a la creation de mon composant 
   componentDidMount(){
-    this.getAllSecGame();
-    this.getAllprimGame();
     this.MsgCustom();
   }
 
+  //Petite fonction pour surprendre les gens qui vont voir le code ^^
   protected MsgCustom(){
     console.log("%cCalmez-Vous ❤️","font-size:40px;")
   }
 
-protected getAllprimGame(){
-  fetch('http://localhost:3001/allgamespri/',{method:'POST',
-                                          headers: {'Content-Type':'application/json'},
-                                          cache:'default'})
-      .then(res => res.json())
-      .then(data => this.setState({btnTitlePrim:data}))
-      .catch(err => console.log(err))
-}
-
-protected getAllSecGame(){
-    fetch('http://localhost:3001/allgamessec/',{method:'POST',
-                                            headers: {
-                                                'Content-Type':'application/json'
-                                            },
-                                            cache:'default'})
-        .then(res => res.json())
-        .then(data => this.setState({btnTitleSec:data}))
-        .catch(err => console.log(err))
-}
-
   public render () {
     return (
       <Router>
-        <AppContext.Provider value={ this.state }>
+        <AppProvider>
+          <GameServices/>
           <Jumbotron></Jumbotron>
           <NavBar></NavBar>
           <Routes></Routes>
           <Footer></Footer>
-        </AppContext.Provider>
+        </AppProvider>
       </Router>
     );
   }

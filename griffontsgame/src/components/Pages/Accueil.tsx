@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import './AllPages.css';
 
+// Fonction qui permet d'afficher la page par defaut de l'application avec deux bouton pour aller sur la page a Propos et Contact
+
 const Accueil = () => {
   return (
     <div className="App">

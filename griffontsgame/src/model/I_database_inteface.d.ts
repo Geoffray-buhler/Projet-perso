@@ -28,8 +28,26 @@ export interface AppState {
     gamename:string,
     role?: string,
     addUser?: () => void,
-    changeNameGame?: () => void,
-    btnTitleSec:Array | null,
-    btnTitlePrim:Array | null,
+    changeNameGame?: () => any,
+    btnTitleSec:Array<IDataBaseGames> | null,
+    btnTitlePrim:Array<IDataBaseGames> | null,
     loginUser?: (username: string, password: string) => void
-  }
+}
+
+interface IAction {
+    type: string;
+}
+
+interface IChangeGameAction extends IAction {
+    newGame:string;
+}
+
+interface ISingleGameLoadedAction extends IAction {
+    gameData:IDataBaseGames;
+}
+
+interface IGamesLoadedAction extends IAction {
+    games:Array<IDatabaseGames>;
+}
+
+export type Action = IChangeGameAction | ISingleGameLoadedAction | IGamesLoadedAction; 

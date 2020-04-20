@@ -5,21 +5,22 @@ import {Link} from "react-router-dom";
 import Logo from '../Logo/Logo';
 import { Nav } from 'react-bootstrap';
 import'./NavBar.css';
-import'../AppContext';
+import'../../services/AppContext';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
-import AppContext from '../AppContext';
+import {AppContext} from '../../services/AppContext';
 
 
 export default class NavBar extends React.Component {
-
     state = {
         username:"Griffont's Game",
         gamename:""
-    }
+        }
 
     protected generateTitlesLinks():any {
         if(this.context.btnTitlePrim.length === 0){
-            return <div>En chargement...</div>
+            return  <div className="spinner-border text-info" role="status">
+                        <span className="sr-only">Chargement...</span>
+                    </div>
         }else{
             return this.context.btnTitlePrim.map((item) => {
                 return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.title}>{item.title}</Link></Nav.Link>
