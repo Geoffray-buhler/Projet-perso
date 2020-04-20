@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {DropdownButton} from 'react-bootstrap';
-import AppContext from '../AppContext';
+import {AppContext} from '../../services/AppContext';
 
 
 export default class Connection extends React.Component {

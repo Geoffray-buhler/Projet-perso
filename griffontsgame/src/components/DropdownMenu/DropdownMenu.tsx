@@ -1,20 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {DropdownButton, Dropdown} from 'react-bootstrap';
 import './DropdownMenu.css';
-import AppContext from '../AppContext';
+import {AppContext} from '../../services/AppContext';
+import {useAppDispatch} from '../../services/DispatcherContext';
+
+const BtnDropdown = ({item}) => {
+    const dispatch = useAppDispatch();
+    return <Dropdown.Item className="btn btn-grey" href="/Seconde games" onClick={() => dispatch({type:"change-game",newGame:item.title})}>{item.title}</Dropdown.Item>
+}
 
 export default class DropdownMenu extends React.Component {
-    
-    constructor(props) {
-        super(props);
-    }
-
     protected generateTitlesSecLinks():any {
         if(this.context.btnTitleSec.length === 0){
-            return <div>Chargement...</div>
+            return <div className="spinner-border text-info" role="status">
+                    <span className="sr-only">Chargement...</span>
+                   </div>
         }else{
             return this.context.btnTitleSec.map((item) => {
-                return <Dropdown.Item className="btn btn-grey" href="/Seconde games" onClick={()=>{this.context.ChangeNameGame(item.title)}}>{item.title}</Dropdown.Item>
+                return <BtnDropdown item={item}/>
             });
         }
     }

@@ -1,12 +1,12 @@
 import React from 'react';
-import {AppState} from '../model/I_database_inteface';
+import {AppState,IDataBaseGames} from '../model/I_database_inteface';
 
 const AppContext = React.createContext<AppState>({
     currentUser: null,
     currentId: null,
     gamename: "",
-    btnTitleSec:[] as Array<AppState>,
-    btnTitlePrim:[] as Array<AppState>
+    btnTitleSec:[] as Array<IDataBaseGames>,
+    btnTitlePrim:[] as Array<IDataBaseGames>
 });
 
 // Permet de récupérer rapidement le state de l'app
@@ -19,4 +19,4 @@ function useAppState() {
   return context
 }
 
-export default {AppContext,useAppState};
+export {AppContext,useAppState};
