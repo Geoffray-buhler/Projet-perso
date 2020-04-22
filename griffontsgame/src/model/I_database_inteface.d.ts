@@ -42,6 +42,10 @@ interface IChangeGameAction extends IAction {
     newGame:string;
 }
 
+interface IChangeUser extends IAction {
+    currentUser: Array<AppState>;
+}
+
 interface ISingleGameLoadedAction extends IAction {
     gameData:IDataBaseGames;
 }

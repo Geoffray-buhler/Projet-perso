@@ -27,11 +27,9 @@ const Apropos = () => {
                                     <option>Ajout d'un theme pour les streams</option>
                                     <option>Autres</option>
                                 </Form.Control>
-                            
                                 <Form.Label>Message</Form.Label>
                                 <Form.Control as="textarea" ></Form.Control>
                             </Form.Group>
-
                             <Button className="mb-3" variant="primary" type="submit">
                                 Envoye
                             </Button>

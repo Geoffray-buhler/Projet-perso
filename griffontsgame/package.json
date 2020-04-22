@@ -13,6 +13,7 @@
     "aws-sdk": "^2.656.0",
     "bcrypt": "^4.0.1",
     "bootstrap": "^4.4.1",
+    "jquery": "^3.5.0",
     "password-hash": "^1.2.2",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",

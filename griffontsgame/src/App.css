@@ -24,6 +24,10 @@
   position: relative;
 }
 
+.btn-font {
+  color:#ffffff !important;
+}
+
 .btn:hover {
   transform:skewX(-20deg) translateY(-5px);
   box-shadow: 0px 37px 30px -4px rgba(0,0,0,0.58);

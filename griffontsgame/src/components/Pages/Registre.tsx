@@ -1,5 +1,7 @@
 import React from 'react';
 import './AllPages.css';
+import { Adresse,Port } from '../../services/UrlNPortServices';
+import { Link } from 'react-router-dom';
 
 class Registre extends React.Component {
 
@@ -20,7 +22,7 @@ class Registre extends React.Component {
                 email: this.state.Email
             })
             console.log(bodyReg)
-            fetch('http://localhost:3001/register/',{method:'POST',
+            fetch(`${Adresse}:${Port}/register`,{method:'POST',
                                                     body:bodyReg,
                                                     headers: {
                                                         'Content-Type': 'application/json'
@@ -72,7 +74,7 @@ class Registre extends React.Component {
                             <input type="text" id="Email" value={this.state.Email} onChange={this.handleChange} className="mb-3 rounded" placeholder="E-mail"></input>
                             <input type="password" id="Password" className="mb-3 rounded" value={this.state.Password} onChange={this.handleChange} placeholder="Mot de passe"></input>
                             <input type="password" id="Passwordbis" className="mb-3 rounded" value={this.state.Passwordbis} onChange={this.handleChange} placeholder="Remettre votre mot de passe"></input>
-                            <button className="btn btn-danger mr-2 mt-3 mb-2" onClick={this.onCompare}>Créer</button>
+                            <Link className="btn btn-primary mr-2 mt-3 mb-2" onClick={this.onCompare} to="/">Créer</Link>
                         </div>
                     </div>
                 </div>

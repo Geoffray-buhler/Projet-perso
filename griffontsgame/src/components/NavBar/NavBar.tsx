@@ -23,7 +23,7 @@ export default class NavBar extends React.Component {
                     </div>
         }else{
             return this.context.btnTitlePrim.map((item) => {
-                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.title}>{item.title}</Link></Nav.Link>
+                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.title}><div className="btn-font">{item.title}</div></Link></Nav.Link>
             });
         }
     }
@@ -39,7 +39,7 @@ export default class NavBar extends React.Component {
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse className="justify-content-between" id="navbar-nav">
                     <Nav.Link>
-                        <Link className="btn btn-bg-custom custom-skew" to="/">Accueil</Link>
+                        <Link className="btn btn-bg-custom custom-skew" to="/"><div className="btn-font">Accueil</div></Link>
                     </Nav.Link>
                     {this.generateTitlesLinks()}
                     <DropdownMenu></DropdownMenu>

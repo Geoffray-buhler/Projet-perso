@@ -1,28 +1,34 @@
 require('dotenv').config()
 
-const express = require('express')
-const app = express()
-const bcrypt = require('bcrypt');
-
+//Const pour express et mariaDB
+const express = require('express');
+const app = express();
 const mariadb = require('mariadb');
 
+//Bcrypt Const
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
+//Const de connextion a la base de données pour les utilisateurs
 const pooluser = mariadb.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER_USER,
     password: process.env.DB_PASSWORD_USER,
     database: process.env.DB_BDD
 })
-
+//Const de connextion a la base de données pour les administrateurs
 const pooladmin = mariadb.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER_ADMIN,
     password: process.env.DB_PASSWORD_ADMIN,
     database: process.env.DB_BDD
 })
-
+//Const pour le choix du ports
 const port = process.env.DB_PORT;
 
-//Disable CORP
+//Desactiver le CORP
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
 
@@ -33,70 +39,9 @@ app.use((req, res, next) => {
     next();
 });
     
-app.use(express.json() );       // to support JSON-encoded bodies
+app.use(express.json() );       // pour accepter les corps en JSON-encoded
 
-//Get a user with ID and return to client
-app.post('/user', express.json(), function(req, res){
-
-    let conn;
-    let login = req.body.login
-    let psw = req.body.psw
-
-    pooluser.getConnection()
-        .then(_conn => {
-            conn = _conn;
-            console.log('Ok ! Connected!')
-            conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //prepare login and password variable 
-            )
-            .then(data => { 
-                if (data.length === 0){
-                    res.send('utilisateur inconnue !')
-                }else {
-                    res.send(data)
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                return('Paramètre de connection incorrecte');
-            })
-    
-            .finally(() => {
-                conn && conn.release();
-            })
-        })
-})
-
-//Register a new account and add this to BDD
-app.post('/register', function(req,res){
-
-    let conn;
-    let Pseudo = req.body.pseudo
-    let Password = req.body.password
-    let Login = req.body.login
-    let E_mail = req.body.email
-
-    pooladmin.getConnection()
-
-        .then(_conn => {
-            conn = _conn;
-            console.log('Ok ! Register OK !')
-            conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,Password,Login,E_mail])
-            .then(data => {
-                if (data){
-                    res.send(data)
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                return('Erreur a la creation du compte');
-            })
-            .finally(() => {
-                conn && conn.release();
-            })
-        })
-})
-
-//Get all game 
+//Recupere tout les jeux 
 app.post('/allgames', function(req,res){
     let conn;
     pooluser.getConnection()
@@ -116,9 +61,10 @@ app.post('/allgames', function(req,res){
         })
 })
 
-//Get all Secondary Games
+//Recupere tout les jeux secondaire
 app.post('/allgamessec',function(req,res){
     let conn;
+    console.log('Connecter ! allgamessec')
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
@@ -136,9 +82,10 @@ app.post('/allgamessec',function(req,res){
         })
 })
 
-//Get all Primary Games
+//Recupere tout les jeux primaire
 app.post('/allgamespri',function(req,res){
     let conn;
+    console.log('Connecter ! allgamespri')
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
@@ -156,31 +103,11 @@ app.post('/allgamespri',function(req,res){
         })
 })
 
-//Get just a pseudo of all account
-app.post('/users',function(req,res){
-    let conn;
-    pooluser.getConnection()
-        .then(_conn => {
-            conn = _conn;
-            conn.query("SELECT Pseudo, FROM users")
-                .then(data => {
-                    res.send(data)
-                })
-        })
-        .catch(err => {
-            console.error(err);
-            return('Erreur a la connection');
-        })
-        .finally(() => {
-            conn && conn.release();
-        })
-})
-
-//Get Principal Game
+//Recupere un jeux principal
 app.post('/gameprinc', function(req,res){
     let conn;
     let Gamename = req.body.name
-
+    console.log('Connecter ! gameprinc')
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
@@ -198,11 +125,11 @@ app.post('/gameprinc', function(req,res){
         })
 })
 
-//Get secondary Game
+//Recupere un jeux secondaire
 app.post('/gamesecond', function(req,res){
     let conn;
     let gamename = req.body.gamename
-
+    console.log('Connecter ! gamesecond')
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
@@ -220,7 +147,7 @@ app.post('/gamesecond', function(req,res){
         })
 })
 
-//Add new game in BDD
+//Ajout un nouveau jeux dans la BDD
 app.post('/newgame',function(req,res){
     let conn;
     let gamename = req.body.gamename
@@ -244,6 +171,91 @@ app.post('/newgame',function(req,res){
         })
 })
 
+//Recupere juste le pseudo de tout les compte
+app.post('/users',function(req,res){
+    let conn;
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT Pseudo, FROM users")
+                .then(data => {
+                    res.send(data)
+                })
+        })
+        .catch(err => {
+            console.error(err);
+            return('Erreur a la connection');
+        })
+        .finally(() => {
+            conn && conn.release();
+        })
+})
+
+
+//Recuperer les utilisateurs avec leur ID et les renvoie au client
+app.post('/user', express.json(), function(req, res){
+
+    let conn;
+    let login = req.body.login
+    let psw = req.body.psw
+
+    pooluser.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            console.log('Ok ! Connected!')
+            conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //Fonction preparer avec le login et le mot de passe
+            )
+            .then(data => { 
+                if (data.length === 0){
+                    res.send('utilisateur inconnue !')
+                }else {
+                    res.send(data)
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                return('Paramètre de connection incorrecte');
+            })
+    
+            .finally(() => {
+                conn && conn.release();
+            })
+        })
+})
+
+//Enregistrement d'un nouveau compte et l'ajoute dans la BDD
+app.post('/register', function(req,res){
+
+    let conn;
+    let Pseudo = req.body.pseudo
+    let Password = req.body.password
+    let Login = req.body.login
+    let E_mail = req.body.email
+
+ 
+    pooladmin.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            console.log('Ok ! Crypting OK !')
+            conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,Password,Login,E_mail])
+                .then(data => {
+                    if (data){
+                        res.send(data)
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    return('Erreur a la creation du compte');
+                })
+                .finally(() => {
+                    conn && conn.release();
+                })
+        })
+    })
+
+
+
+// Permet d'ecouter le Port definit plus haut et de l'afficher sur les logs
 
 app.listen(port, function(){
     console.log(`serveur ecoute le port ${port}!`)

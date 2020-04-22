@@ -1,5 +1,5 @@
 import * as React  from 'react';
-import {AppState,Action, IChangeGameAction, IGamesLoadedAction} from '../model/I_database_inteface';
+import {AppState,Action, IChangeGameAction, IGamesLoadedAction, IChangeUser} from '../model/I_database_inteface';
 
 // Contexte responsable de dispatcher les actions
 const AppDispatchContext = React.createContext<React.Dispatch<Action> | undefined>(undefined)
@@ -28,6 +28,9 @@ function appReducer(state:AppState, action:Action) :AppState{
         }
         case 'SecGamesLoaded': {
             return { ...state,btnTitleSec:(action as IGamesLoadedAction).games }
+        }
+        case 'change-user': {
+            return { ...state,currentUser:(action as unknown as IChangeUser).currentUser }
         }
         default: {
             throw new Error(`Unhandled action type: ${action.type}`)

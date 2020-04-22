@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppDispatchContext } from './DispatcherContext';
 import { Action } from '../model/I_database_inteface';
+import { Adresse,Port } from '../services/UrlNPortServices';
 
 export default class GameServices extends React.Component {
     dispatch!: React.Dispatch<Action>;
@@ -11,10 +12,9 @@ export default class GameServices extends React.Component {
         this.getAllSecGame();
         this.getAllprimGame();
       }
-    
-    
+    //Fonction 
     protected getAllprimGame(){
-      fetch('http://localhost:3001/allgamespri/',{method:'POST',
+      fetch(`${Adresse}:${Port}/allgamespri/`,{method:'POST',
                                               headers: {'Content-Type':'application/json'},
                                               cache:'default'})
           .then(res => res.json())
@@ -23,7 +23,7 @@ export default class GameServices extends React.Component {
     }
     
     protected getAllSecGame(){
-        fetch('http://localhost:3001/allgamessec/',{method:'POST',
+        fetch(`${Adresse}:${Port}/allgamessec/`,{method:'POST',
                                                 headers: {
                                                     'Content-Type':'application/json'
                                                 },

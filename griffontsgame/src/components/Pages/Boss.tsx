@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../model/I_database_inteface.d.ts';
 import './AllPages.css';
+import { Adresse,Port } from '../../services/UrlNPortServices';
 
 
 export default class Boss extends React.Component {
@@ -9,7 +10,7 @@ export default class Boss extends React.Component {
         bodygame: '',
         screengame:'',
         linkgame:'',
-        themegame:''
+        themegame:'',
     }
 
     componentDidMount(){
@@ -17,12 +18,10 @@ export default class Boss extends React.Component {
     }
 
     getgame(){
-
         let post = JSON.stringify({
             name: this.state.gamename,
         })
-
-        fetch('http://localhost:3001/gameprinc/',{method:'POST',
+        fetch(`${Adresse}:${Port}/gameprinc/`,{method:'POST',
                                                 body:post,
                                                 headers: {
                                                     'Content-Type': 'application/json'
@@ -34,7 +33,7 @@ export default class Boss extends React.Component {
                 bodygame: data[0].description,
                 screengame:data[0].screenshot,
                 linkgame:data[0].link,
-                themegame:data[0].Theme
+                themegame:data[0].theme
                 })
             })
             .catch(err => console.log(err))
@@ -51,7 +50,7 @@ export default class Boss extends React.Component {
                         <label>Genre</label>
                         <h3 className="mb-3">{this.state.themegame}</h3>
                         <img className="screenshot" alt="" src={this.state.screengame}/><br></br>
-                        <a href={this.state.linkgame} className="btn btn-bg-custom mr-2 mt-3 mb-2">Telechargement</a>
+                        <a href={this.state.linkgame} className="btn btn-bg-custom mr-2 mt-3 mb-2 btn-font">Telechargement</a>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ import CGU from '../Pages/CGU';
 import Register from '../Pages/Registre';
 import Apropos from '../Pages/Apropos';
 import Contact from '../Pages/Contact';
+import Profils from '../Pages/Profils';
 
 const Routes = () =>{
     return(
@@ -25,6 +26,9 @@ const Routes = () =>{
                 </Route>
                 <Route path="/cgu">
                     <CGU/>
+                </Route>
+                <Route path="/profil"> 
+                    <Profils/>
                 </Route>
                 <Route path="/enregistrement">
                     <Register/>

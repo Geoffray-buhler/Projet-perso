@@ -17,9 +17,9 @@ const Jumbotron = () =>{
                 touchControls: false,
                 minHeight: 200.00,
                 minWidth: 200.00,
-                scale: 0.50,
-                color1: 0xffff,
-                color2: 0xc2ff,
+                scale: 0.70,
+                color1: 0xb3b3,
+                color2: 0x359cf2,
                 speed: 2.00
             }) 
         }

@@ -1,0 +1,32 @@
+.btn-customcolor{
+    background-color: #464646;
+}
+
+.btn-font {
+    color:#ffffff !important;
+}
+
+.center {
+    transform:skewX(0deg)!important;
+    border-radius:0px!important;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease-in-out;
+}
+
+.center:hover {
+    transform:skewX(0deg) translateY(-5px);
+    box-shadow: 0px 37px 30px -4px rgba(0,0,0,0.58);
+  }
