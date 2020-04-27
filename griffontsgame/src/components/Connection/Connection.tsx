@@ -5,6 +5,7 @@ import { Adresse,Port } from '../../services/UrlNPortServices';
 
 
 export default class Connection extends React.Component {
+
     context!: React.ContextType<typeof AppContext>;
     
     state = {
@@ -21,14 +22,13 @@ export default class Connection extends React.Component {
 
         if(this.state.login && this.state.password){
             fetch(`${Adresse}:${Port}/user/`,{method:'POST',
-                                                body,
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                cache:'default'})
+                                              body,
+                                              headers: {
+                                                  'Content-Type': 'application/json'
+                                              },
+                                              cache:'default'})
                 .then(res => res.json())
                 .then(data => {
-                    debugger
                     this.setState({
                         currentUser:data
                     })

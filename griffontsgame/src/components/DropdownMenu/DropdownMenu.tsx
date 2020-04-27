@@ -8,7 +8,7 @@ import './DropdownMenu.css';
 
 const BtnDropdown = ({gamename}) => {
     const dispatch = useAppDispatch();
-    return <Link className="btn btn-customcolor ml-2 mb-2" to="/Seconde games" onClick={() => {debugger; dispatch({type:"change-game",newGame:gamename});}}><div className="btn-font">{gamename}</div></Link>
+    return <Link className="btn btn-customcolor ml-2 mb-2" to="/Seconde games" onClick={() => { dispatch({type:"change-game",newGame:gamename});}}><div className="btn-font">{gamename}</div></Link>
 }
 
 export default class DropdownMenu extends React.Component {

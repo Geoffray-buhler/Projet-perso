@@ -11,7 +11,7 @@ const Footer = () =>{
         <footer className="App-footer">
                 <Container fluid>
                     <Navbar expand="lg" variant="dark" className="shadow-lg color-footer justify-content-between">
-                        <Navbar.Brand><h6>Created by MOI</h6></Navbar.Brand>
+                        <Navbar.Brand><p>Created by MOI</p></Navbar.Brand>
                         <Navbar.Brand>                
                             <div>
                                 <a className="hovicon effect-8 mr-2 ml-2" href="https://www.linkedin.com/in/geoffray-buhler-93100099/"><img className="svg" alt="Logo Lien pour ma page linked in" src={LogoLink}></img></a>
@@ -19,7 +19,7 @@ const Footer = () =>{
                                 <a className="hovicon effect-8 mr-2 ml-2" href="https://github.com/Geoffray-buhler"><img className="svg" alt="Logo Lien pour ma page GitHub" src={LogoGitHub}></img></a>
                             </div>
                         </Navbar.Brand>
-                        <Navbar.Brand><h6>© Copyright - 2020</h6></Navbar.Brand>
+                        <Navbar.Brand><p>© Copyright - 2020</p></Navbar.Brand>
                     </Navbar>
                 </Container>
         </footer>

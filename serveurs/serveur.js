@@ -7,9 +7,7 @@ const mariadb = require('mariadb');
 
 //Bcrypt Const
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
+const salt = 10;
 
 //Const de connextion a la base de données pour les utilisateurs
 const pooluser = mariadb.createPool({
@@ -202,25 +200,40 @@ app.post('/user', express.json(), function(req, res){
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
-            console.log('Ok ! Connected!')
-            conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw] //Fonction preparer avec le login et le mot de passe
-            )
-            .then(data => { 
-                if (data.length === 0){
-                    res.send('utilisateur inconnue !')
-                }else {
-                    res.send(data)
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                return('Paramètre de connection incorrecte');
-            })
-    
-            .finally(() => {
-                conn && conn.release();
-            })
-        })
+            conn.query("SELECT password,login FROM users WHERE Login = ?", [login])
+                .then(data => {data.forEach(el => { 
+                    bcrypt.compare(psw, data.password)
+                        .then(result => {
+                            res.send(el,result) ;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.send('Paramètre de connection incorrecte');
+                        })
+                        .finally(() => {
+                            conn && conn.release();
+                        })
+                })
+
+            ;})
+        //conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw]) //Fonction preparer avec le login et le mot de passe
+        //
+        //    .then(data => { 
+        //        if (data.length === 0){
+        //            res.send('utilisateur inconnue !')
+        //        }else {
+        //            res.send(data)
+        //        }
+        //    })
+        //    .catch(err => {
+        //        console.error(err);
+        //        return('Paramètre de connection incorrecte');
+        //    })
+        
+        //    .finally(() => {
+        //        conn && conn.release();
+        //    })
+     })
 })
 
 //Enregistrement d'un nouveau compte et l'ajoute dans la BDD
@@ -231,25 +244,27 @@ app.post('/register', function(req,res){
     let Password = req.body.password
     let Login = req.body.login
     let E_mail = req.body.email
-
  
     pooladmin.getConnection()
         .then(_conn => {
             conn = _conn;
-            console.log('Ok ! Crypting OK !')
-            conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,Password,Login,E_mail])
-                .then(data => {
-                    if (data){
-                        res.send(data)
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    return('Erreur a la creation du compte');
-                })
-                .finally(() => {
-                    conn && conn.release();
-                })
+            bcrypt.hash(Password,salt)
+                .then(function(hash){
+                    conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,hash,Login,E_mail])
+                        .then(data => {
+                            if (data){
+                                res.send(data)
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            return('Erreur a la creation du compte');
+                        })
+                        .finally(() => {
+                            conn && conn.release();
+                        })
+                });
+            
         })
     })
 

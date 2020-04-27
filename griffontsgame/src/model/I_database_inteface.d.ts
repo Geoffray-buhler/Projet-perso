@@ -1,10 +1,12 @@
 export interface IDataBaseGames {
-    title:string;
-    description:string;
-    screenshot:string;
-    link:string;
-    principal:number;
-    theme:string;
+    length: number;
+    title:string,
+    description:string,
+    screenshot:string,
+    link:string,
+    principal:number,
+    theme:string,
+    infoGame:Array<AppState>
 }
 
 export interface IDataBaseUsers {
@@ -23,9 +25,9 @@ export interface IStateNavbar {
 }
 
 export interface AppState {
-    currentUser: any ,
+    currentUser: any,
     currentId: number | null,
-    gamename:string,
+    gamename:Array,
     role?: string,
     addUser?: () => void,
     changeNameGame?: () => any,

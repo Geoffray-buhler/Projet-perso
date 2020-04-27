@@ -30,7 +30,7 @@ const Jumbotron = () =>{
             <BootJumbo fluid className="bg-transparent w-100">
                 <Container fluid className="text-light text-center mx-auto">
                     <p className="text-shadow h1">Griffont's Game</p>
-                    <p className="text-shadow">
+                    <p className="text-shadow h3">
                     Port-folio de mes créations vidéo-ludique ainsi que Web / Web mobile.
                     </p>
                 </Container>
