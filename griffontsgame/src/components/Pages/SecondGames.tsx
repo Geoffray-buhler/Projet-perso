@@ -11,7 +11,6 @@ const SecondeGames = () => {
         let body = JSON.stringify({
             gamename:gamename
         })
-        debugger
         fetch(`${Adresse}:${Port}/gamesecond/`,{method:'POST',
                                                 body,
                                                 headers: {
@@ -19,10 +18,9 @@ const SecondeGames = () => {
                                                 },
                                                 cache:'default'})
             .then(res => res.json())
-            .then(data => {debugger; setInfoGame(data) })
+            .then(data => {setInfoGame(data)})
             .catch(err => console.log(err))
     },[gamename]);
-    debugger
     if (infoGame.length === 0){
     return(
             <div className="App">

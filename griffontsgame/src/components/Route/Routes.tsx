@@ -11,6 +11,8 @@ import Register from '../Pages/Registre';
 import Apropos from '../Pages/Apropos';
 import Contact from '../Pages/Contact';
 import Profils from '../Pages/Profils';
+import Admin from '../Pages/Admin';
+import NewGame from '../Pages/NewGame';
 
 const Routes = () =>{
     return(
@@ -30,6 +32,9 @@ const Routes = () =>{
                 <Route path="/profil"> 
                     <Profils/>
                 </Route>
+                <Route path="/admin">
+                    <Admin/>
+                </Route>
                 <Route path="/enregistrement">
                     <Register/>
                 </Route>
@@ -41,6 +46,9 @@ const Routes = () =>{
                 </Route>
                 <Route path="/">
                     <Accueil/>
+                </Route>
+                <Route path="/NewGame">
+                    <NewGame/>
                 </Route>
           </Switch>
           )

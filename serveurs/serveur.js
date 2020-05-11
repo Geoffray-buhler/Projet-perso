@@ -9,6 +9,10 @@ const mariadb = require('mariadb');
 const bcrypt = require('bcrypt');
 const salt = 10;
 
+//Token
+const jwt = require('jsonwebtoken');
+const secret = 'mysecretsshhh';
+
 //Const de connextion a la base de données pour les utilisateurs
 const pooluser = mariadb.createPool({
     host: process.env.DB_HOST,
@@ -196,44 +200,28 @@ app.post('/user', express.json(), function(req, res){
     let conn;
     let login = req.body.login
     let psw = req.body.psw
+    let hashedPsw;
 
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
-            conn.query("SELECT password,login FROM users WHERE Login = ?", [login])
-                .then(data => {data.forEach(el => { 
-                    bcrypt.compare(psw, data.password)
-                        .then(result => {
-                            res.send(el,result) ;
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            res.send('Paramètre de connection incorrecte');
-                        })
-                        .finally(() => {
-                            conn && conn.release();
-                        })
+            conn.query("SELECT * FROM users WHERE Login = ?", [login])
+                .then(data => {data.forEach(() => { 
+                    hashedPsw = data[0].password
+                    bcrypt.compare(psw, hashedPsw,(err,result) => {
+                        if(err) {
+                            console.log('bcrypt - error -', err);
+                        } else {
+                            console.log('bcrypt - result -', result);
+                            res.send(data[0]);
+                        }
+                    })
                 })
-
             ;})
-        //conn.query("SELECT * FROM users WHERE Login = ? AND Password = ?", [login, psw]) //Fonction preparer avec le login et le mot de passe
-        //
-        //    .then(data => { 
-        //        if (data.length === 0){
-        //            res.send('utilisateur inconnue !')
-        //        }else {
-        //            res.send(data)
-        //        }
-        //    })
-        //    .catch(err => {
-        //        console.error(err);
-        //        return('Paramètre de connection incorrecte');
-        //    })
-        
-        //    .finally(() => {
-        //        conn && conn.release();
-        //    })
-     })
+        })
+        .finally(() => {
+            conn && conn.release();
+        })
 })
 
 //Enregistrement d'un nouveau compte et l'ajoute dans la BDD
@@ -244,11 +232,19 @@ app.post('/register', function(req,res){
     let Password = req.body.password
     let Login = req.body.login
     let E_mail = req.body.email
+    let Acc = []
  
     pooladmin.getConnection()
         .then(_conn => {
             conn = _conn;
-            bcrypt.hash(Password,salt)
+            conn.query("SELECT pseudo,email,login FROM users")
+                .then(data => {
+                    Acc = data;
+                })
+            if(Pseudo === Acc.pseudo || Login === Acc.login || E_mail === email){
+                res.send('compte deja existant')
+            }
+                bcrypt.hash(Password,salt)
                 .then(function(hash){
                     conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,hash,Login,E_mail])
                         .then(data => {
@@ -264,9 +260,13 @@ app.post('/register', function(req,res){
                             conn && conn.release();
                         })
                 });
-            
-        })
-    })
+                
+        }
+    )
+})
+
+
+//initialisation du token
 
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {AppContext} from '../../services/AppContext';
 import { Adresse,Port } from '../../services/UrlNPortServices';
-
+import {useAppDispatch} from '../../services/DispatcherContext';
 
 export default class Connection extends React.Component {
 
@@ -15,6 +15,7 @@ export default class Connection extends React.Component {
     };
 
     CheckUser = () => {
+        const dispatch = useAppDispatch();
         let body = JSON.stringify({
             login: this.state.login,
             psw: this.state.password
@@ -29,10 +30,8 @@ export default class Connection extends React.Component {
                                               cache:'default'})
                 .then(res => res.json())
                 .then(data => {
-                    this.setState({
-                        currentUser:data
-                    })
-                    console.log(this.state.currentUser)
+                    dispatch({type:"change-user",currentUser:data});
+                    console.log(this.context.currentUser)
                 })
                 .then(err => {
                     this.setState({
@@ -46,7 +45,18 @@ export default class Connection extends React.Component {
                 return("Veuillez-mettre un Mot de passe valide")
             }
         }
-    }                                        
+    }
+    
+    resetState = () => {
+        const dispatch = useAppDispatch();
+        dispatch({type:"change-user",currentUser:[]});
+        this.setState({        
+            login:'',
+            password:'',
+            currentUser:''
+        })
+
+    }
 
     onUpdateLoginState = (e:any) => {
         this.setState({login:e.target.value});
@@ -54,6 +64,12 @@ export default class Connection extends React.Component {
 
     onUpdatePasswordState = (e:any) => {
         this.setState({password:e.target.value});
+    }
+    
+    createAdminBtn = () => {
+        if ((this.state.currentUser as any).roles === 'admin'){
+            return (<Link className="btn btn-info mt-3" to="/admin">Administration</Link>)
+        }   return (null)
     }
 
     render = () =>{
@@ -64,9 +80,12 @@ export default class Connection extends React.Component {
                         Profils
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div className="d-flex flex-column justify-content-center p-2">
-                            <h5>Bienvenu {(this.state.currentUser as any).pseudo} !</h5>
-                            <Link to="/profil">Profil</Link>
+                        <div className="d-flex flex-column justify-content-center ml-1 p-2">
+                            <h5>Bienvenu</h5>
+                            <p>{(this.state.currentUser as any).pseudo},{(this.state.currentUser as any).roles} !</p>
+                            <Link className="btn btn-primary" to="/profil">Profil</Link>
+                            {this.createAdminBtn()}
+                            <Link className="btn btn-danger mt-3" onClick={this.resetState} to="/">Déconnexion</Link>
                         </div>
                     </div>
                 </div>
@@ -78,7 +97,7 @@ export default class Connection extends React.Component {
                         Connection
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div className="d-flex flex-column justify-content-center p-2">
+                        <div className="d-flex flex-column justify-content-center ml-1 p-2">
                             <h5 className="text-center">Login</h5>
                             <input type="text" id="Login" value={this.state.login} onChange={this.onUpdateLoginState}></input>
                             <h5 className="text-center">Mot de passe</h5>

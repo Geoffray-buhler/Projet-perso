@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppContext} from '../../services/AppContext';
 import {useAppDispatch} from '../../services/DispatcherContext';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import 'jquery/bower.json';
 import 'bootstrap';
 import './DropdownMenu.css';
