@@ -42,6 +42,3 @@ export default class DropdownMenu extends React.Component {
 }
 
 DropdownMenu.contextType = AppContext;
-
-
-

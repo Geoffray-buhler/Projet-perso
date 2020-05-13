@@ -30,7 +30,7 @@ function appReducer(state:AppState, action:Action) :AppState{
             return { ...state,btnTitleSec:(action as IGamesLoadedAction).games }
         }
         case 'change-user': {
-            return { ...state,currentUser:(action as unknown as IChangeUser).currentUser }
+            return { ...state,currentUser:(action as IChangeUser).currentUser }
         }
         default: {
             throw new Error(`Unhandled action type: ${action.type}`)

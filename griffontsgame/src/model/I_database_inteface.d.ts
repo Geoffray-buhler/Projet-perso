@@ -53,7 +53,7 @@ interface ISingleGameLoadedAction extends IAction {
 }
 
 interface IGamesLoadedAction extends IAction {
-    games:Array<IDatabaseGames>;
+    games:Array<IDataBaseGames>;
 }
 
 export type Action = IChangeGameAction | ISingleGameLoadedAction | IGamesLoadedAction | IChangeUser;
