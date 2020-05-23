@@ -5,24 +5,22 @@ import { Adresse,Port } from '../../services/UrlNPortServices';
 import {useAppDispatch} from '../../services/DispatcherContext';
 
 const Connection = () => {
-   
-    const [state, setstate] = useState({
-        login:'',
-        password:'',
-        currentUser:''
-    });
 
-    const [err,seterr] = useState('');
+    const dispatch = useAppDispatch();
+   
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+    const [currentUser, setCurrentUser] = useState('');
 
     const CheckUser = () => {
 
-        const dispatch = useAppDispatch();
+        
         let body = JSON.stringify({
-            login: state.login,
-            psw: state.password
+            login: login,
+            psw: password
         })
 
-        if(state.login && state.password){
+        if(login && password){
             fetch(`${Adresse}:${Port}/user/`,{method:'POST',
                                               body,
                                               headers: {
@@ -32,12 +30,10 @@ const Connection = () => {
                 .then(res => res.json())
                 .then(data => {
                     dispatch({type:"change-user",currentUser:data});
-                })
-                .then(err => {
-                    console.log(err)
+                    setCurrentUser(data);
                 })
         }else{
-            if(!state.login){
+            if(!login){
                 return("Veuillez-mettre un nom de compte valide")
             }else{
                 return("Veuillez-mettre un Mot de passe valide")
@@ -46,30 +42,27 @@ const Connection = () => {
     }
     
     const resetState = () => {
-        const dispatch = useAppDispatch();
-        dispatch({type:"change-user",currentUser:[]});
-        setstate({        
-            login:'',
-            password:'',
-            currentUser:''
-        })
+        dispatch({type:"change-user",currentUser:null});
+        setLogin('');
+        setPassword('');
+        setCurrentUser('');
     }
 
-    const onUpdateLoginState = (e:string) => {
-        setstate({ login:e.target.value });
+    const onUpdateLoginState = (e:any) => {
+        setLogin( e.target.value );
     }
 
-    const onUpdatePasswordState = (e:string) => {
-        setstate({ password:e.target.value });
+    const onUpdatePasswordState = (e:any) => {
+        setPassword( e.target.value );
     }
     
     const createAdminBtn = () => {
-        if ((state.currentUser as any).roles === 'admin'){
+        if ((currentUser as any).roles === 'admin'){
             return (<Link className="btn btn-info mt-3" to="/admin">Administration</Link>)
         }   return (null)
     }
 
-if(state.currentUser !== ''){
+if(currentUser !== ''){
     return( 
         <div className="dropdown">
             <button className="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,7 +71,7 @@ if(state.currentUser !== ''){
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div className="d-flex flex-column justify-content-center ml-1 p-2">
                     <h5>Bienvenu</h5>
-                    <p>{(state.currentUser as any).pseudo},{(state.currentUser as any).roles}!</p>
+                    <p>{(currentUser as any).pseudo},{(currentUser as any).roles}!</p>
                     <Link className="btn btn-primary" to="/profil">Profil</Link>
                     {createAdminBtn()}
                     <Link className="btn btn-danger mt-3" onClick={resetState} to="/">Déconnexion</Link>
@@ -87,25 +80,22 @@ if(state.currentUser !== ''){
         </div>
     )
 }
-    return(
-        <div className="dropdown">
-            <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Connection
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <div className="d-flex flex-column justify-content-center ml-1 p-2">
-                    <h5 className="text-center">Login</h5>
-                    <input type="text" id="Login" value={state.login} onChange={() => onUpdateLoginState}></input>
-                    <h5 className="text-center">Mot de passe</h5>
-                    <input type="password" id="Password" value={state.password} onChange={() => onUpdatePasswordState}></input>
-                    <button className="btn btn-info mt-2" onClick={() => CheckUser()}>Connection</button>
-                    <p className="text-dark text-center">Si vous avez pas de compte <Link to="/cgu">cree en un !</Link></p>
-                </div>
+    return(<div className="dropdown">
+        <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Connection
+        </button>
+        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div className="d-flex flex-column justify-content-center ml-1 p-2">
+                <h5 className="text-center">Login</h5>
+                <input type="text" id="Login" value={login} onChange={onUpdateLoginState}></input>
+                <h5 className="text-center">Mot de passe</h5>
+                <input type="password" id="Password" value={password} onChange={onUpdatePasswordState}></input>
+                <button className="btn btn-info mt-2" onClick={() => CheckUser()}>Connection</button>
+                <p className="text-dark text-center">Si vous avez pas de compte <Link to="/cgu">cree en un !</Link></p>
             </div>
         </div>
-    )
+    </div>)
 }
-
 
 Connection.contextType = AppContext;
 

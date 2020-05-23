@@ -20,6 +20,7 @@ const pooluser = mariadb.createPool({
     password: process.env.DB_PASSWORD_USER,
     database: process.env.DB_BDD
 })
+
 //Const de connextion a la base de données pour les administrateurs
 const pooladmin = mariadb.createPool({
     host: process.env.DB_HOST,
@@ -27,8 +28,9 @@ const pooladmin = mariadb.createPool({
     password: process.env.DB_PASSWORD_ADMIN,
     database: process.env.DB_BDD
 })
+
 //Const pour le choix du ports
-const port = process.env.DB_PORT;
+const port = process.env.SERVER_PORT;
 
 //Desactiver le CORP
 app.use((req, res, next) => {
@@ -265,6 +267,28 @@ app.post('/register', function(req,res){
     )
 })
 
+app.post('/delete', function (req,res){
+    let id = req.body.id
+    let idtodel = req.body.idtodel
+
+    if(id === idtodel){
+        pooladmin.getConnection()
+            .then(_conn =>{
+                conn = _conn;
+                conn.query("DELETE FROM `users` WHERE id= ?",[id])
+                    .then(data => {
+                        res.send('ton compte a etais éffacé')
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        return(`Erreur lors du l'effacement du compte`);
+                    })
+                    .finally(() => {
+                        conn && conn.release();
+                    })
+            });
+    }
+})
 
 //initialisation du token
 

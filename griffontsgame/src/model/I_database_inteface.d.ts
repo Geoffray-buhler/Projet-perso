@@ -25,7 +25,7 @@ export interface IStateNavbar {
 }
 
 export interface AppState {
-    currentUser: [] | null | Array<IDataBaseUsers>,
+    currentUser: null | IDataBaseUsers,
     currentId: number | null,
     gamename:Array,
     role?: string,
@@ -45,7 +45,7 @@ interface IChangeGameAction extends IAction {
 }
 
 interface IChangeUser extends IAction {
-    currentUser: Array<IDataBaseUsers>;
+    currentUser: null | IDataBaseUsers;
 }
 
 interface ISingleGameLoadedAction extends IAction {
