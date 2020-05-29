@@ -4,17 +4,30 @@ import {AppContext} from '../../services/AppContext';
 import { Adresse,Port } from '../../services/UrlNPortServices';
 import {useAppDispatch} from '../../services/DispatcherContext';
 
+const useLocalStorage = (LocalToken: string): [string,React.Dispatch<React.SetStateAction<string>>] => {
+
+    const [tokenVal,setTokenVal] = React.useState(
+        localStorage.getItem(LocalToken) || ''
+    );
+
+    React.useEffect(() => {
+        localStorage.setItem(LocalToken, tokenVal);
+    }, [tokenVal]);
+
+    return [tokenVal, setTokenVal];
+}
+
 const Connection = () => {
 
     const dispatch = useAppDispatch();
    
+    const [token, setToken] = useLocalStorage('tokenVal');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState('');
 
     const CheckUser = () => {
 
-        
         let body = JSON.stringify({
             login: login,
             psw: password
@@ -29,8 +42,9 @@ const Connection = () => {
                                               cache:'default'})
                 .then(res => res.json())
                 .then(data => {
-                    dispatch({type:"change-user",currentUser:data});
-                    setCurrentUser(data);
+                    dispatch({type:"change-user",currentUser:data.data});
+                    setToken(data.token);
+                    setCurrentUser(data.data);
                 })
         }else{
             if(!login){
@@ -46,6 +60,7 @@ const Connection = () => {
         setLogin('');
         setPassword('');
         setCurrentUser('');
+        localStorage.removeItem('tokenVal');
     }
 
     const onUpdateLoginState = (e:any) => {

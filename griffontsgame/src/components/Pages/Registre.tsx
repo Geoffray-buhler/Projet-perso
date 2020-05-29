@@ -11,19 +11,18 @@ class Registre extends React.Component {
         Email:'',
         Password:'',
         Passwordbis:'',
-        ErrMsg:'Les mots de passe ne sont pas les même'
+        ErrMsg:'Les mots de passe ne sont pas les mêmes'
     }
 
     onRegister = () => {
-            let bodyReg = JSON.stringify({
+            let body = JSON.stringify({
                 pseudo: this.state.Pseudo,
                 password: this.state.Password,
                 login: this.state.Login,
                 email: this.state.Email
             })
-            console.log(bodyReg)
             fetch(`${Adresse}:${Port}/register`,{method:'POST',
-                                                    body:bodyReg,
+                                                    body,
                                                     headers: {
                                                         'Content-Type': 'application/json'
                                                     },

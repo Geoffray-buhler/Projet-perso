@@ -21,6 +21,7 @@ import GameServices from './services/GamesServices';
   const AppProvider = ({children}) => {
   const [state, dispatch] = React.useReducer(appReducer, {currentUser: null,
                                                           currentId: null,
+                                                          currentToken:null,
                                                           gamename: "",
                                                           btnTitleSec:[],
                                                           btnTitlePrim:[]})
@@ -33,19 +34,19 @@ import GameServices from './services/GamesServices';
     )
   }
 
-export default class App extends React.Component {
+const App = () => {
 
   //Fonction qui permet de charger mes fonction a la creation de mon composant 
-  componentDidMount(){
-    this.MsgCustom();
+  const componentDidMount = () => {
+    localStorage.getItem('tokenVal');
+    MsgCustom();
   }
 
   //Petite fonction pour surprendre les gens qui vont voir le code ^^
-  protected MsgCustom(){
+  const MsgCustom = () => {
     console.log("%cCalmez-Vous ❤️","font-size:40px;color:#ff0000;background-color:#000000;border-radius:10px;padding:2rem;")
   }
-
-  public render () {
+  componentDidMount();
     return (
       <Router>
         <AppProvider>
@@ -57,5 +58,6 @@ export default class App extends React.Component {
         </AppProvider>
       </Router>
     );
-  }
 }
+
+export default App

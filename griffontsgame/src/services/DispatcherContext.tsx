@@ -1,5 +1,5 @@
 import * as React  from 'react';
-import {AppState,Action, IChangeGameAction, IGamesLoadedAction, IChangeUser} from '../model/I_database_inteface';
+import {AppState,Action, IChangeGameAction, IGamesLoadedAction, IChangeUser, IToken} from '../model/I_database_inteface';
 
 // Contexte responsable de dispatcher les actions
 const AppDispatchContext = React.createContext<React.Dispatch<Action> | undefined>(undefined)
@@ -9,7 +9,7 @@ const AppDispatchContext = React.createContext<React.Dispatch<Action> | undefine
 function useAppDispatch() {
     const context = React.useContext(AppDispatchContext)
     if (context === undefined) {
-      throw new Error('useCountDispatch must be used within a CountProvider')
+      throw new Error('useAppDispatch doit etre utilisé avec AppContext')
     }
     return context
 }
@@ -31,6 +31,9 @@ function appReducer(state:AppState, action:Action) :AppState{
         }
         case 'change-user': {
             return { ...state,currentUser:(action as IChangeUser).currentUser }
+        }
+        case 'change-token': {
+            return { ...state,currentToken:(action as IToken).currentToken }
         }
         default: {
             throw new Error(`Unhandled action type: ${action.type}`)

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Switch,BrowserRouter as Router,Route} from 'react-router-dom';
+import {Switch,BrowserRouter as Router,Route, Redirect} from 'react-router-dom';
 
 import Accueil from '../Pages/Accueil';
 import Norage from '../Pages/Norage';
@@ -13,43 +13,34 @@ import Contact from '../Pages/Contact';
 import Profils from '../Pages/Profils';
 import Admin from '../Pages/Admin';
 import NewGame from '../Pages/NewGame';
+import Modify from '../Pages/Modify';
+import L404 from '../Pages/404';
+import SecondeGames from '../Pages/SecondGames';
+
+const routes = [
+    {
+        path: '?...',
+        component: () =>{}
+    }
+]
 
 const Routes = () =>{
     return(
             <Switch>
-                <Route path="/Norage Kart">
-                    <Norage/>
-                </Route>
-                <Route path="/Boss Rush">
-                    <Boss/>
-                </Route>
-                <Route path="/Seconde games">
-                    <SecondGames/>
-                </Route>
-                <Route path="/cgu">
-                    <CGU/>
-                </Route>
-                <Route path="/profil"> 
-                    <Profils/>
-                </Route>
-                <Route path="/admin">
-                    <Admin/>
-                </Route>
-                <Route path="/enregistrement">
-                    <Register/>
-                </Route>
-                <Route path="/APropos">
-                    <Apropos/>
-                </Route>
-                <Route path="/Contact">
-                    <Contact/>
-                </Route>
-                <Route path="/">
-                    <Accueil/>
-                </Route>
-                <Route path="/NewGame">
-                    <NewGame/>
-                </Route>
+                <Route path="/Norage Kart" component={Norage}/>
+                <Route path="/Boss Rush" component={Boss}/>
+                <Route path="/Seconde games" component={SecondeGames}/>
+                <Route path="/NewGame" component={NewGame}/>
+                <Route path="/modify" component={Modify}/>
+                <Route path="/cgu" component={CGU}/>
+                <Route path="/profil" component={Profils}/> 
+                <Route path="/admin" component={Admin}/>
+                <Route path="/enregistrement" component={Register}/>
+                <Route path="/APropos" component={Apropos}/>
+                <Route path="/Contact" component={Contact}/>
+                <Route path="/404" component={L404}/>
+                <Route exact path="/" component={Accueil}/>
+                <Route component={L404}/>
           </Switch>
           )
 }

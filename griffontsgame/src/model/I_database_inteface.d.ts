@@ -16,6 +16,7 @@ export interface IDataBaseUsers {
     email:string;
     password:string;
     roles:string;
+    Token : string | null;
 }
 
 export interface IStateNavbar {
@@ -27,6 +28,7 @@ export interface IStateNavbar {
 export interface AppState {
     currentUser: null | IDataBaseUsers,
     currentId: number | null,
+    currentToken : null | IDataBaseUsers,
     gamename:Array,
     role?: string,
     addUser?: () => void,
@@ -48,6 +50,10 @@ interface IChangeUser extends IAction {
     currentUser: null | IDataBaseUsers;
 }
 
+interface IToken extends IAction {
+    currentToken : IDataBaseUsers | null;
+}
+
 interface ISingleGameLoadedAction extends IAction {
     gameData:IDataBaseGames;
 }
@@ -56,4 +62,4 @@ interface IGamesLoadedAction extends IAction {
     games:Array<IDataBaseGames>;
 }
 
-export type Action = IChangeGameAction | ISingleGameLoadedAction | IGamesLoadedAction | IChangeUser;
+export type Action = IChangeGameAction | ISingleGameLoadedAction | IGamesLoadedAction | IChangeUser | IToken;

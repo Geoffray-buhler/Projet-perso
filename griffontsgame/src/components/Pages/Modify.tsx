@@ -1,29 +1,27 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './AllPages.css';
 import { Adresse,Port } from '../../services/UrlNPortServices';
 import { Link } from 'react-router-dom';
 
-class Registre extends React.Component {
+const Modify = () => {
 
-    state={
+    const [state,setState] = useState({
         Login:'',
         Pseudo:'',
         Email:'',
         Password:'',
         Passwordbis:'',
-        ErrMsg:'Les mots de passe ne sont pas les même'
-    }
+        ErrMsg:'Les mots de passe ne sont pas les mêmes'
+    })
 
-    onRegister = () => {
-            let bodyReg = JSON.stringify({
-                pseudo: this.state.Pseudo,
-                password: this.state.Password,
-                login: this.state.Login,
-                email: this.state.Email
+    const onModify = () => {
+            let body = JSON.stringify({
+                pseudo: state.Pseudo,
+                password: state.Password,
+                email: state.Email
             })
-            console.log(bodyReg)
-            fetch(`${Adresse}:${Port}/register`,{method:'POST',
-                                                    body:bodyReg,
+            fetch(`${Adresse}:${Port}/modify`,{method:'POST',
+                                                    body,
                                                     headers: {
                                                         'Content-Type': 'application/json'
                                                     },
@@ -31,56 +29,52 @@ class Registre extends React.Component {
                                                     })
     }
 
-    handleChange = (event:any) => {
+    const handleChange = (event:any) => {
         const $inputEl: HTMLInputElement = event.target;
         const inputName: string = $inputEl.id;
-        const inputValue: string = $inputEl.value;
+        const  inputValue: string = $inputEl.value;
         switch (inputName){
             case 'Login':
-                this.setState({Login : inputValue})
+                setState({...state, Login: inputValue})
             break
             case 'Pseudo':
-                this.setState({Pseudo : inputValue})
+                setState({...state, Pseudo: inputValue})
             break
             case 'Email':
-                this.setState({Email : inputValue})
+                setState({...state, Email: inputValue})
             break
             case 'Password':
-                this.setState({Password : inputValue})
+                setState({...state, Password: inputValue})
             break
             case 'Passwordbis':
-                this.setState({Passwordbis : inputValue})
+                setState({...state, Passwordbis: inputValue})
             break
         }
     }
 
-    onCompare = () => {
-        if(this.state.Password !== "" && this.state.Password === this.state.Passwordbis && this.state.Pseudo !== "")
+    const onCompare = () => {
+        if(state.Password !== "" && state.Password === state.Passwordbis && state.Pseudo !== "")
         {
-            this.onRegister();
+            onModify();
         }
-        return (this.state.ErrMsg);
+        return (state.ErrMsg);
     }
-
-    render(){
         return (
             <div className="App">
                 <div className="container">
                     <div className="row">
                         <div className="col-10 offset-1 custom-bg text-light d-flex flex-column">
-                            <h1 className="mb-3">Création de compte</h1>
-                            <input type="text" id="Pseudo" value={this.state.Pseudo} onChange={this.handleChange} className="mb-3 rounded" placeholder="Pseudo"></input>
-                            <input type="text" id="Login" value={this.state.Login} onChange={this.handleChange} className="mb-3 rounded" placeholder="Nom de connection"></input>
-                            <input type="text" id="Email" value={this.state.Email} onChange={this.handleChange} className="mb-3 rounded" placeholder="E-mail"></input>
-                            <input type="password" id="Password" className="mb-3 rounded" value={this.state.Password} onChange={this.handleChange} placeholder="Mot de passe"></input>
-                            <input type="password" id="Passwordbis" className="mb-3 rounded" value={this.state.Passwordbis} onChange={this.handleChange} placeholder="Remettre votre mot de passe"></input>
-                            <Link className="btn btn-primary mr-2 mt-3 mb-2" onClick={this.onCompare} to="/">Créer</Link>
+                            <h1 className="mb-3">Modifier votre compte !</h1>
+                            <input type="text" id="Pseudo" value={state.Pseudo} onChange={handleChange} className="mb-3 rounded" placeholder="Pseudo"></input>
+                            <input type="text" id="Email" value={state.Email} onChange={handleChange} className="mb-3 rounded" placeholder="E-mail"></input>
+                            <input type="password" id="Password" className="mb-3 rounded" value={state.Password} onChange={handleChange} placeholder="Mot de passe"></input>
+                            <input type="password" id="Passwordbis" className="mb-3 rounded" value={state.Passwordbis} onChange={handleChange} placeholder="Remettre votre mot de passe"></input>
+                            <Link className="btn btn-primary mr-2 mt-3 mb-2" onClick={onCompare} to="/">Modifier</Link>
                         </div>
                     </div>
                 </div>
             </div>
         );
-    }
 }
 
-export default Registre;
+export default Modify;

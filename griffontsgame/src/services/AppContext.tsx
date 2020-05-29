@@ -4,6 +4,7 @@ import {AppState,IDataBaseGames} from '../model/I_database_inteface';
 const AppContext = React.createContext<AppState>({
     currentUser: null,
     currentId: null,
+    currentToken:null,
     gamename: "",
     btnTitleSec:[] as Array<IDataBaseGames>,
     btnTitlePrim:[] as Array<IDataBaseGames>

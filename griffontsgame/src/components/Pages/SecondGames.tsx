@@ -6,7 +6,6 @@ import { Adresse,Port } from '../../services/UrlNPortServices';
 const SecondeGames = () => {
     const { gamename } = useAppState();
     const [ infoGame, setInfoGame ] = useState( [""] as any );
-    debugger
     useEffect(() => {
         let body = JSON.stringify({
             gamename:gamename

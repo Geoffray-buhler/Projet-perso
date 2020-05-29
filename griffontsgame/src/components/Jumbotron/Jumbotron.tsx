@@ -8,7 +8,7 @@ declare global {
 
 const Jumbotron = () =>{
 
-    // Effet qui permettent de faire fonctionner l'effets du jumbotron
+   // Effet qui permettent de faire fonctionner l'effets du jumbotron
     useEffect(() => {
         if(window.VANTA){
             window.VANTA.CELLS({
@@ -24,7 +24,7 @@ const Jumbotron = () =>{
             }) 
         }
     }, [])
-    
+
     return(
         <header id="bgAnim" className="App-header rounded-lg">
             <BootJumbo fluid className="bg-transparent w-100">

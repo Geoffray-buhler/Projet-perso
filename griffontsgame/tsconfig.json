@@ -21,6 +21,9 @@
     "noImplicitAny": false
   },
   "include": [
-    "src", "public/JS/param.js"
+    "src", "public/JS/param.js", "public/JS/three.js"
+  ],
+  "exclude": [
+    
   ]
 }
