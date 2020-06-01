@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Switch,BrowserRouter as Router,Route, Redirect} from 'react-router-dom';
+import {Switch,Route} from 'react-router-dom';
 
 import Accueil from '../Pages/Accueil';
 import Norage from '../Pages/Norage';
@@ -15,21 +15,14 @@ import Admin from '../Pages/Admin';
 import NewGame from '../Pages/NewGame';
 import Modify from '../Pages/Modify';
 import L404 from '../Pages/404';
-import SecondeGames from '../Pages/SecondGames';
 
-const routes = [
-    {
-        path: '?...',
-        component: () =>{}
-    }
-]
 
 const Routes = () =>{
     return(
             <Switch>
                 <Route path="/Norage Kart" component={Norage}/>
                 <Route path="/Boss Rush" component={Boss}/>
-                <Route path="/Seconde games" component={SecondeGames}/>
+                <Route path="/Seconde games" component={SecondGames}/>
                 <Route path="/NewGame" component={NewGame}/>
                 <Route path="/modify" component={Modify}/>
                 <Route path="/cgu" component={CGU}/>

@@ -8,7 +8,7 @@ const L404 = () => {
           <div className="container">
               <div className="row">
                 <div className="col-12 text-light custom-bg p-4">
-                    <img alt="image de erreur 404" className="img404" src={NF404}></img><br/>
+                    <img alt="La page rechercher n'existe pas" className="img404" src={NF404}></img><br/>
                     <div className="lds-ellipsis"></div>
                 </div>
             </div>

@@ -26,6 +26,7 @@ const Admin = () => {
                 console.log(data)
                 setValid(data);
             });
+
         fetchutil(`${Adresse}:${Port}/users`,{method:'POST',
                                                 headers: {
                                                     'Content-Type': 'application/json'
@@ -33,7 +34,8 @@ const Admin = () => {
                                                 cache:'default'})
             .then(res =>res.json())
             .then(users => setUsers(users))
-    });
+    },[]);
+
     const generateUserList = () => {
         users.map((item:IDataBaseUsers) => {
             return (
@@ -58,7 +60,7 @@ const Admin = () => {
                                 </div>
                                 <div className="col-6 custom-bg text-light">
                                     <h3>Menu des utilisateurs</h3>
-                                    {()=> generateUserList()}
+                                    {generateUserList()}
                                 </div>
                             </div>
                         </div>

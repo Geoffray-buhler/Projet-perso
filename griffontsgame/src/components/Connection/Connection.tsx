@@ -1,8 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {AppContext} from '../../services/AppContext';
 import { Adresse,Port } from '../../services/UrlNPortServices';
 import {useAppDispatch} from '../../services/DispatcherContext';
+import fetchutil from '../../services/FetchUtils';
+import { cleanup } from '@testing-library/react';
 
 const useLocalStorage = (LocalToken: string): [string,React.Dispatch<React.SetStateAction<string>>] => {
 
@@ -42,9 +44,9 @@ const Connection = () => {
                                               cache:'default'})
                 .then(res => res.json())
                 .then(data => {
-                    dispatch({type:"change-user",currentUser:data.data});
+                    dispatch({type:"change-user",currentUser:data});
                     setToken(data.token);
-                    setCurrentUser(data.data);
+                    setCurrentUser(data);
                 })
         }else{
             if(!login){
@@ -52,6 +54,21 @@ const Connection = () => {
             }else{
                 return("Veuillez-mettre un Mot de passe valide")
             }
+        }
+    }
+
+    const checkLocalStorage = () => {
+        if(token !== ""){
+            fetchutil(`${Adresse}:${Port}/user`,{method:'POST',
+                                                  headers: {
+                                                    'Content-Type': 'application/json'
+                                                  },
+                                                  cache:'default'})
+                .then(res => res.json())
+                .then(data => {
+                    dispatch({type:"change-user",currentUser:data.data});
+                    setCurrentUser(data);
+                })
         }
     }
     
@@ -77,7 +94,31 @@ const Connection = () => {
         }   return (null)
     }
 
-if(currentUser !== ''){
+    useEffect(() => {
+        if (currentUser === ""){
+            checkLocalStorage();
+            console.log(currentUser)
+        }
+    }, [])
+
+    console.log(currentUser)
+if(currentUser === ""){
+    return(<div className="dropdown">
+            <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Connection
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div className="d-flex flex-column justify-content-center ml-1 p-2">
+                    <h5 className="text-center">Login</h5>
+                    <input type="text" id="Login" value={login} onChange={onUpdateLoginState}></input>
+                    <h5 className="text-center">Mot de passe</h5>
+                    <input type="password" id="Password" value={password} onChange={onUpdatePasswordState}></input>
+                    <button className="btn btn-info mt-2" onClick={() => CheckUser()}>Connection</button>
+                    <p className="text-dark text-center">Si vous avez pas de compte <Link to="/cgu">cree en un !</Link></p>
+                </div>
+            </div>
+        </div>)
+}else{
     return( 
         <div className="dropdown">
             <button className="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,7 +127,7 @@ if(currentUser !== ''){
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div className="d-flex flex-column justify-content-center ml-1 p-2">
                     <h5>Bienvenu</h5>
-                    <p>{(currentUser as any).pseudo},{(currentUser as any).roles}!</p>
+                    <p>{(currentUser as any)[0].pseudo}</p>
                     <Link className="btn btn-primary" to="/profil">Profil</Link>
                     {createAdminBtn()}
                     <Link className="btn btn-danger mt-3" onClick={resetState} to="/">Déconnexion</Link>
@@ -94,22 +135,8 @@ if(currentUser !== ''){
             </div>
         </div>
     )
-}
-    return(<div className="dropdown">
-        <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Connection
-        </button>
-        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <div className="d-flex flex-column justify-content-center ml-1 p-2">
-                <h5 className="text-center">Login</h5>
-                <input type="text" id="Login" value={login} onChange={onUpdateLoginState}></input>
-                <h5 className="text-center">Mot de passe</h5>
-                <input type="password" id="Password" value={password} onChange={onUpdatePasswordState}></input>
-                <button className="btn btn-info mt-2" onClick={() => CheckUser()}>Connection</button>
-                <p className="text-dark text-center">Si vous avez pas de compte <Link to="/cgu">cree en un !</Link></p>
-            </div>
-        </div>
-    </div>)
+        
+    }
 }
 
 Connection.contextType = AppContext;

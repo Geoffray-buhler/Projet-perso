@@ -6,6 +6,10 @@
     margin-left: auto;
   }
 
+  p{
+    font-size: 14px;
+  }
+
   .svg{
     position: absolute;
     top: 8px;

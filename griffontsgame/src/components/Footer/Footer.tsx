@@ -10,7 +10,7 @@ const Footer = () =>{
     return(
         <footer className="App-footer">
                 <Container fluid>
-                    <Navbar expand="lg" variant="dark" className="shadow-lg color-footer justify-content-between">
+                    <Navbar variant="dark" className="shadow-lg color-footer justify-content-between">
                         <Navbar.Brand><p>Created by MOI</p></Navbar.Brand>
                         <Navbar.Brand>                
                             <div>
