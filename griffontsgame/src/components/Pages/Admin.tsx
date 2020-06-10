@@ -5,6 +5,7 @@ import fetchutil from "../../services/FetchUtils";
 import { Adresse,Port } from '../../services/UrlNPortServices';
 import NotHere from './NotHere';
 import { IDataBaseUsers } from '../../model/I_database_inteface';
+import Trashcan from '../../assets/image/trash-can.png';
 
 const Admin = () => {
     //si l'utilisateur est un admin alors faire profile version admin sinon faire profil simple 
@@ -13,8 +14,6 @@ const Admin = () => {
     const [users,setUsers] = useState([]);
 
     useEffect(() => {
-
-        let usertable = []
 
         fetchutil(`${Adresse}:${Port}/admin`,{method:'POST',
                                         headers: {
@@ -37,12 +36,8 @@ const Admin = () => {
     },[]);
 
     const generateUserList = () => {
-        users.map((item:IDataBaseUsers) => {
-            return (
-                <div>
-                    <span>{item.id}</span><span>{item.pseudo}</span><span>{item.email}</span><span>{item.pseudo}</span>
-                </div>
-            )
+        return users.map((item:IDataBaseUsers) => {
+            return <div className="col-12 mt-2 border d-flex justify-content-between">{item.id} | {item.pseudo} {item.email}<button className="btn btn-danger m-2"><img className="trash" alt=" de corbeille" src={Trashcan}></img></button></div>
         });
     }
         switch (valid) {
@@ -60,7 +55,11 @@ const Admin = () => {
                                 </div>
                                 <div className="col-6 custom-bg text-light">
                                     <h3>Menu des utilisateurs</h3>
-                                    {generateUserList()}
+                                    <div className="container">
+                                        <div className="row">
+                                            {generateUserList()}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

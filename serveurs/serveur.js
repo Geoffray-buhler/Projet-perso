@@ -54,14 +54,12 @@ const port = process.env.SERVER_PORT;
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
 
-    // authorized headers for preflight requests
-    // https://developer.mozilla.org/en-US/docs/Glossary/preflight_request
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
     next();
 });
     
-app.use(express.json() );       // pour accepter les corps en JSON-encoded
+app.use(express.json() );// pour accepter les corps en JSON
 
 //Recupere tout les jeux 
 
@@ -241,33 +239,31 @@ app.post('/newgame',function(req,res){
 //Recupere juste le id,pseudo,email,roles de tout les compte
 
 
-    app.post('/users',function(req,res){
-        let token = req.headers.authorization
-        let check = checkToken(token)
-        let conn;
+app.post('/users',function(req,res){
+    let token = req.headers.authorization
+    let check = checkToken(token)
+    let conn;
 
-        if(check != null){
-            if(check.roles === "admin"){
-                pooluser.getConnection()
-                    .then(_conn => {
-                        conn = _conn;
-                        conn.query("SELECT id,pseudo,email,roles FROM users")
-                            .then(data => {
-                                res.send(data)
-                            })
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        return('Erreur a la connection');
-                    })
-                    .finally(() => {
-                        conn && conn.release();
-                    })
-            }
+    if(check != null){
+        if(check.roles === "admin"){
+            pooluser.getConnection()
+                .then(_conn => {
+                    conn = _conn;
+                    conn.query("SELECT id,pseudo,email,roles FROM users")
+                        .then(data => {
+                            res.send(data)
+                        })
+                })
+                .catch(err => {
+                    console.error(err);
+                    return('Erreur a la connection');
+                })
+                .finally(() => {
+                    conn && conn.release();
+                })
         }
-    })
-
-
+    }
+})
 
 //Recuperer un utilisateur avec leur ID et les renvoie au client avec un token
 
@@ -284,14 +280,17 @@ app.post('/user', express.json(), function(req, res){
         pooluser.getConnection()
             .then(_conn => {
                 conn = _conn;
-                conn.query("SELECT * FROM users WHERE Login = ?", [check.login])
+                conn.query("SELECT * FROM users WHERE login = ?", [check.login])
                     .then(data => res.send(data))
+            })
+            .finally(() => {
+                conn && conn.release();
             })
     }else{
     pooluser.getConnection()
         .then(_conn => {
             conn = _conn;
-            conn.query("SELECT * FROM users WHERE Login = ?", [login])
+            conn.query("SELECT * FROM users WHERE login = ?", [login])
                 .then(data => {data.forEach(() => { 
                     hashedPsw = data[0].password
                     const token = jwt.sign({
@@ -326,42 +325,38 @@ app.post('/register', function(req,res){
     let Password = req.body.password;
     let Login = req.body.login;
     let E_mail = req.body.email;
-    let Acc = [];
-    let token = req.headers.authorization
-    let check = checkToken(token)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+    let Acc = [];                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
  
-    if (check != null){
-        pooladmin.getConnection()
-            .then(_conn => {
-                conn = _conn;
-                conn.query("SELECT * FROM users")
-                    .then(data => {
-                        Acc = data;
-                    })
-                    .then (() => {if(Pseudo === Acc.pseudo || Login === Acc.login || E_mail === Acc.email){
-                        res.send('compte deja existant')
-                    }
-                        bcrypt.hash(Password,salt)
-                        .then(function(hash){
-                            conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,hash,Login,E_mail])
-                                .then(data => {
-                                    if (data){
-                                        res.send(data)
-                                    }
-                                })
-                                .catch(err => {
-                                    console.error(err);
-                                    return('Erreur a la creation du compte');
-                                })
-                                .finally(() => {
-                                    conn && conn.release();
-                                })
-                        });
-                    })
-                    
-            }
-        )
-    }
+    pooladmin.getConnection()
+        .then(_conn => {
+            conn = _conn;
+            conn.query("SELECT * FROM users")
+                .then(data => {
+                    Acc = data;
+                })
+                .then (() => {if(Pseudo === Acc.pseudo || Login === Acc.login || E_mail === Acc.email){
+                    res.send('compte deja existant')
+                }
+                    bcrypt.hash(Password,salt)
+                    .then(function(hash){
+                        conn.query("INSERT INTO users (pseudo,password,login,email) VALUES (?,?,?,?)",[Pseudo,hash,Login,E_mail])
+                            .then(data => {
+                                if (data){
+                                    res.send(data)
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                return('Erreur a la creation du compte');
+                            })
+                            .finally(() => {
+                                conn && conn.release();
+                            })
+                    });
+                })
+                
+        }
+    )
 })
 
 //Fonction qui permet de supprimer completement et en cascade un utilisateur soit par l'admin soit par l'utilisateur aussi

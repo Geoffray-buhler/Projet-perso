@@ -31,7 +31,7 @@ export default class DropdownMenu extends React.Component {
         return(
             <div className="dropdown">
                 <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span className="btn-font"> Jeux 2 heure challenge</span>
+                    Jeux 2 heure challenge
                 </button>
                 <div className="dropdown-menu border p-3" aria-labelledby="dropdownMenuButton">
                     {this.generateTitlesSecLinks()}

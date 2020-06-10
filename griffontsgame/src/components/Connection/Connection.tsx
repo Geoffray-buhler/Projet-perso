@@ -4,16 +4,19 @@ import {AppContext} from '../../services/AppContext';
 import { Adresse,Port } from '../../services/UrlNPortServices';
 import {useAppDispatch} from '../../services/DispatcherContext';
 import fetchutil from '../../services/FetchUtils';
-import { cleanup } from '@testing-library/react';
 
-const useLocalStorage = (LocalToken: string): [string,React.Dispatch<React.SetStateAction<string>>] => {
+const useLocalStorage = (LocalToken: string): [string|null,React.Dispatch<React.SetStateAction<string|null>>] => {
 
     const [tokenVal,setTokenVal] = React.useState(
-        localStorage.getItem(LocalToken) || ''
+        localStorage.getItem(LocalToken) || null
     );
 
     React.useEffect(() => {
-        localStorage.setItem(LocalToken, tokenVal);
+        if(tokenVal === null){
+            localStorage.removeItem(LocalToken);
+        }else{
+            localStorage.setItem(LocalToken, tokenVal);
+        }
     }, [tokenVal]);
 
     return [tokenVal, setTokenVal];
@@ -44,9 +47,9 @@ const Connection = () => {
                                               cache:'default'})
                 .then(res => res.json())
                 .then(data => {
-                    dispatch({type:"change-user",currentUser:data});
+                    dispatch({type:"change-user",currentUser:data.data});
                     setToken(data.token);
-                    setCurrentUser(data);
+                    setCurrentUser(data.data);
                 })
         }else{
             if(!login){
@@ -58,7 +61,7 @@ const Connection = () => {
     }
 
     const checkLocalStorage = () => {
-        if(token !== ""){
+        if(token){
             fetchutil(`${Adresse}:${Port}/user`,{method:'POST',
                                                   headers: {
                                                     'Content-Type': 'application/json'
@@ -66,8 +69,8 @@ const Connection = () => {
                                                   cache:'default'})
                 .then(res => res.json())
                 .then(data => {
-                    dispatch({type:"change-user",currentUser:data.data});
-                    setCurrentUser(data);
+                    dispatch({type:"change-user",currentUser:data[0]});
+                    setCurrentUser(data[0]);
                 })
         }
     }
@@ -77,7 +80,7 @@ const Connection = () => {
         setLogin('');
         setPassword('');
         setCurrentUser('');
-        localStorage.removeItem('tokenVal');
+        setToken(null);
     }
 
     const onUpdateLoginState = (e:any) => {
@@ -99,7 +102,7 @@ const Connection = () => {
             checkLocalStorage();
             console.log(currentUser)
         }
-    }, [])
+    },[currentUser])
 
     console.log(currentUser)
 if(currentUser === ""){
@@ -127,7 +130,7 @@ if(currentUser === ""){
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div className="d-flex flex-column justify-content-center ml-1 p-2">
                     <h5>Bienvenu</h5>
-                    <p>{(currentUser as any)[0].pseudo}</p>
+                    <p>{(currentUser as any).pseudo}</p>
                     <Link className="btn btn-primary" to="/profil">Profil</Link>
                     {createAdminBtn()}
                     <Link className="btn btn-danger mt-3" onClick={resetState} to="/">Déconnexion</Link>

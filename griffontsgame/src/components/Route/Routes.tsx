@@ -5,6 +5,7 @@ import {Switch,Route} from 'react-router-dom';
 import Accueil from '../Pages/Accueil';
 import Norage from '../Pages/Norage';
 import Boss from '../Pages/Boss';
+import BisonRace from '../Pages/BisonRace';
 import SecondGames from '../Pages/SecondGames';
 import CGU from '../Pages/CGU';
 import Register from '../Pages/Registre';
@@ -20,17 +21,18 @@ import L404 from '../Pages/404';
 const Routes = () =>{
     return(
             <Switch>
-                <Route path="/Norage Kart" component={Norage}/>
-                <Route path="/Boss Rush" component={Boss}/>
-                <Route path="/Seconde games" component={SecondGames}/>
-                <Route path="/NewGame" component={NewGame}/>
-                <Route path="/modify" component={Modify}/>
-                <Route path="/cgu" component={CGU}/>
-                <Route path="/profil" component={Profils}/> 
-                <Route path="/admin" component={Admin}/>
-                <Route path="/enregistrement" component={Register}/>
-                <Route path="/APropos" component={Apropos}/>
-                <Route path="/Contact" component={Contact}/>
+                <Route exact path="/Norage_Kart" component={Norage}/>
+                <Route exact path="/Boss_Rush" component={Boss}/>
+                <Route exact path="/bisonrace" component={BisonRace}/>
+                <Route path="/Seconde_games/:gamename" component={SecondGames}/>
+                <Route exact path="/NewGame" component={NewGame}/>
+                <Route exact path="/modify" component={Modify}/>
+                <Route exact path="/cgu" component={CGU}/>
+                <Route exact path="/profil" component={Profils}/> 
+                <Route exact path="/admin" component={Admin}/>
+                <Route exact path="/enregistrement" component={Register}/>
+                <Route exact path="/APropos" component={Apropos}/>
+                <Route exact path="/Contact" component={Contact}/>
                 <Route path="/404" component={L404}/>
                 <Route exact path="/" component={Accueil}/>
                 <Route component={L404}/>
