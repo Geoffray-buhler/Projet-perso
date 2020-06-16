@@ -6,7 +6,7 @@ import { Adresse,Port } from '../../services/UrlNPortServices';
 
 export default class Boss extends React.Component {
     state = {
-        gamename: 'BisonRace',
+        gamename: 'Bison Race',
         bodygame: '',
         screengame:'',
         linkgame:'',

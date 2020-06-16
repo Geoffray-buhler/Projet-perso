@@ -50,7 +50,7 @@ export default class Boss extends React.Component {
                         <label>Genre</label>
                         <h3 className="mb-3">{this.state.themegame}</h3>
                         <img className="screenshot" alt="" src={this.state.screengame}/><br></br>
-                        <a href={this.state.linkgame} className="btn btn-bg-custom mr-2 mt-3 mb-2 btn-font">Telechargement</a>
+                        <a href={this.state.linkgame} className="btn btn-primary mr-2 mt-3 mb-2 btn-font">Telechargement</a>
                     </div>
                 </div>
             </div>

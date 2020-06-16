@@ -23,7 +23,7 @@ const Routes = () =>{
             <Switch>
                 <Route exact path="/Norage_Kart" component={Norage}/>
                 <Route exact path="/Boss_Rush" component={Boss}/>
-                <Route exact path="/bisonrace" component={BisonRace}/>
+                <Route exact path="/bison_race" component={BisonRace}/>
                 <Route path="/Seconde_games/:gamename" component={SecondGames}/>
                 <Route exact path="/NewGame" component={NewGame}/>
                 <Route exact path="/modify" component={Modify}/>

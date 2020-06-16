@@ -23,7 +23,7 @@ export default class NavBar extends React.Component {
                     </div>
         }else{
             return this.context.btnTitlePrim.map((item) => {
-                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.title}><div className="btn-font">{item.title}</div></Link></Nav.Link>
+                return <Nav.Link><Link className="btn btn-bg-custom custom-skew" to={item.slug}><div className="btn-font">{item.title}</div></Link></Nav.Link>
             });
         }
     }
